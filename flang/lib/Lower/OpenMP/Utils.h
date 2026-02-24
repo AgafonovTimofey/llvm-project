@@ -189,14 +189,16 @@ void collectTileSizesFromOpenMPConstruct(
     llvm::SmallVectorImpl<int64_t> &tileSizes,
     Fortran::semantics::SemanticsContext &semaCtx);
 
+int64_t getElementBytesOrZero(hlfir::Entity entity, const mlir::DataLayout &dl);
+
 mlir::Value genAffinityAddr(Fortran::lower::AbstractConverter &converter,
                             const omp::Object &object,
                             Fortran::lower::StatementContext &stmtCtx,
                             mlir::Location loc);
 
 mlir::Value genAffinityLen(fir::FirOpBuilder &builder, mlir::Location loc,
-                           const mlir::DataLayout &dl, mlir::Value addr,
-                           llvm::ArrayRef<mlir::Value> bounds, bool hasRef);
+                           const mlir::DataLayout &dl, hlfir::Entity entity,
+                           llvm::ArrayRef<mlir::Value> bounds);
 
 struct IteratorRange {
   mlir::Value lb;
@@ -210,7 +212,7 @@ bool hasIVReference(
     const llvm::SmallPtrSetImpl<const Fortran::semantics::Symbol *> &ivSyms);
 
 mlir::Value genIteratorCoordinate(Fortran::lower::AbstractConverter &converter,
-                                  mlir::Value base,
+                                  hlfir::Entity entity,
                                   llvm::ArrayRef<mlir::Value> ivs,
                                   mlir::Location loc);
 
