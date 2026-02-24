@@ -5,9 +5,8 @@ define amdgpu_ps void @test_fpclass_zext(float inreg %x, i32 %z, ptr addrspace(1
 ; CHECK-LABEL: test_fpclass_zext:
 ; CHECK:       ; %bb.0:
 ; CHECK-NEXT:    v_cmp_class_f32_e64 s[0:1], s2, 3
-; CHECK-NEXT:    s_cmp_lg_u64 s[0:1], 0
-; CHECK-NEXT:    s_cselect_b32 s0, 1, 0
-; CHECK-NEXT:    v_add_u32_e32 v0, s0, v0
+; CHECK-NEXT:    v_cndmask_b32_e64 v3, 0, 1, s[0:1]
+; CHECK-NEXT:    v_add_u32_e32 v0, v3, v0
 ; CHECK-NEXT:    global_store_dword v[1:2], v0, off
 ; CHECK-NEXT:    s_endpgm
   %cond = call i1 @llvm.is.fpclass.f32(float %x, i32 3)
@@ -21,9 +20,8 @@ define amdgpu_ps void @test_fpclass_sext(float inreg %x, i32 %z, ptr addrspace(1
 ; CHECK-LABEL: test_fpclass_sext:
 ; CHECK:       ; %bb.0:
 ; CHECK-NEXT:    v_cmp_class_f32_e64 s[0:1], s2, 3
-; CHECK-NEXT:    s_cmp_lg_u64 s[0:1], 0
-; CHECK-NEXT:    s_cselect_b32 s0, -1, 0
-; CHECK-NEXT:    v_add_u32_e32 v0, s0, v0
+; CHECK-NEXT:    v_cndmask_b32_e64 v3, 0, -1, s[0:1]
+; CHECK-NEXT:    v_add_u32_e32 v0, v3, v0
 ; CHECK-NEXT:    global_store_dword v[1:2], v0, off
 ; CHECK-NEXT:    s_endpgm
   %cond = call i1 @llvm.is.fpclass.f32(float %x, i32 3)
@@ -36,10 +34,11 @@ define amdgpu_ps void @test_fpclass_sext(float inreg %x, i32 %z, ptr addrspace(1
 define amdgpu_ps void @test_fpclass_select_ss(float inreg %x, i32 inreg %a, i32 inreg %b, i32 %z, ptr addrspace(1) %ptr) {
 ; CHECK-LABEL: test_fpclass_select_ss:
 ; CHECK:       ; %bb.0:
-; CHECK-NEXT:    v_cmp_class_f32_e64 s[0:1], s2, 3
-; CHECK-NEXT:    s_cmp_lg_u64 s[0:1], 0
-; CHECK-NEXT:    s_cselect_b32 s0, s3, s4
-; CHECK-NEXT:    v_add_u32_e32 v0, s0, v0
+; CHECK-NEXT:    v_mov_b32_e32 v3, s3
+; CHECK-NEXT:    v_mov_b32_e32 v4, s4
+; CHECK-NEXT:    v_cmp_class_f32_e64 vcc, s2, 3
+; CHECK-NEXT:    v_cndmask_b32_e32 v3, v4, v3, vcc
+; CHECK-NEXT:    v_add_u32_e32 v0, v3, v0
 ; CHECK-NEXT:    global_store_dword v[1:2], v0, off
 ; CHECK-NEXT:    s_endpgm
   %cond = call i1 @llvm.is.fpclass.f32(float %x, i32 3)
@@ -52,10 +51,10 @@ define amdgpu_ps void @test_fpclass_select_ss(float inreg %x, i32 inreg %a, i32 
 define amdgpu_ps void @test_fpclass_f32_select_s_imm(float inreg %x, i32 inreg %a, i32 %z, ptr addrspace(1) %ptr) {
 ; CHECK-LABEL: test_fpclass_f32_select_s_imm:
 ; CHECK:       ; %bb.0:
+; CHECK-NEXT:    v_mov_b32_e32 v3, s3
 ; CHECK-NEXT:    v_cmp_class_f32_e64 s[0:1], s2, 3
-; CHECK-NEXT:    s_cmp_lg_u64 s[0:1], 0
-; CHECK-NEXT:    s_cselect_b32 s0, 1, s3
-; CHECK-NEXT:    v_add_u32_e32 v0, s0, v0
+; CHECK-NEXT:    v_cndmask_b32_e64 v3, v3, 1, s[0:1]
+; CHECK-NEXT:    v_add_u32_e32 v0, v3, v0
 ; CHECK-NEXT:    global_store_dword v[1:2], v0, off
 ; CHECK-NEXT:    s_endpgm
   %cond = call i1 @llvm.is.fpclass.f32(float %x, i32 3)
