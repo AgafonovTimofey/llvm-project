@@ -33,30 +33,30 @@ define void @za_zt0_shared_caller_no_state_callee(ptr %callee) "aarch64_inout_za
 ; CHECK-SDAG-LABEL: za_zt0_shared_caller_no_state_callee:
 ; CHECK-SDAG:       // %bb.0:
 ; CHECK-SDAG-NEXT:    stp x29, x30, [sp, #-32]! // 16-byte Folded Spill
-; CHECK-SDAG-NEXT:    str x19, [sp, #16] // 8-byte Spill
+; CHECK-SDAG-NEXT:    stp x20, x19, [sp, #16] // 16-byte Folded Spill
 ; CHECK-SDAG-NEXT:    mov x29, sp
 ; CHECK-SDAG-NEXT:    sub sp, sp, #80
 ; CHECK-SDAG-NEXT:    rdsvl x8, #1
 ; CHECK-SDAG-NEXT:    mov x9, sp
 ; CHECK-SDAG-NEXT:    msub x9, x8, x8, x9
 ; CHECK-SDAG-NEXT:    mov sp, x9
-; CHECK-SDAG-NEXT:    sub x10, x29, #16
-; CHECK-SDAG-NEXT:    sub x19, x29, #80
+; CHECK-SDAG-NEXT:    sub x19, x29, #16
+; CHECK-SDAG-NEXT:    sub x20, x29, #80
 ; CHECK-SDAG-NEXT:    stp x9, x8, [x29, #-16]
-; CHECK-SDAG-NEXT:    msr TPIDR2_EL0, x10
-; CHECK-SDAG-NEXT:    str zt0, [x19]
+; CHECK-SDAG-NEXT:    msr TPIDR2_EL0, x19
+; CHECK-SDAG-NEXT:    str zt0, [x20]
 ; CHECK-SDAG-NEXT:    blr x0
 ; CHECK-SDAG-NEXT:    smstart za
-; CHECK-SDAG-NEXT:    ldr zt0, [x19]
+; CHECK-SDAG-NEXT:    ldr zt0, [x20]
 ; CHECK-SDAG-NEXT:    mrs x8, TPIDR2_EL0
-; CHECK-SDAG-NEXT:    sub x0, x29, #16
+; CHECK-SDAG-NEXT:    mov x0, x19
 ; CHECK-SDAG-NEXT:    cbnz x8, .LBB1_2
 ; CHECK-SDAG-NEXT:  // %bb.1:
 ; CHECK-SDAG-NEXT:    bl __arm_tpidr2_restore
 ; CHECK-SDAG-NEXT:  .LBB1_2:
 ; CHECK-SDAG-NEXT:    msr TPIDR2_EL0, xzr
 ; CHECK-SDAG-NEXT:    mov sp, x29
-; CHECK-SDAG-NEXT:    ldr x19, [sp, #16] // 8-byte Reload
+; CHECK-SDAG-NEXT:    ldp x20, x19, [sp, #16] // 16-byte Folded Reload
 ; CHECK-SDAG-NEXT:    ldp x29, x30, [sp], #32 // 16-byte Folded Reload
 ; CHECK-SDAG-NEXT:    ret
 ;
@@ -461,36 +461,38 @@ define void @disable_tailcallopt(ptr %callee) "aarch64_inout_zt0" nounwind {
 define void @za_zt0_private_za_to_shared_za(ptr %callee) "aarch64_inout_za" "aarch64_inout_zt0" nounwind {
 ; CHECK-SDAG-LABEL: za_zt0_private_za_to_shared_za:
 ; CHECK-SDAG:       // %bb.0:
-; CHECK-SDAG-NEXT:    stp x29, x30, [sp, #-32]! // 16-byte Folded Spill
-; CHECK-SDAG-NEXT:    stp x20, x19, [sp, #16] // 16-byte Folded Spill
+; CHECK-SDAG-NEXT:    stp x29, x30, [sp, #-48]! // 16-byte Folded Spill
+; CHECK-SDAG-NEXT:    str x21, [sp, #16] // 8-byte Spill
 ; CHECK-SDAG-NEXT:    mov x29, sp
+; CHECK-SDAG-NEXT:    stp x20, x19, [sp, #32] // 16-byte Folded Spill
 ; CHECK-SDAG-NEXT:    sub sp, sp, #80
 ; CHECK-SDAG-NEXT:    rdsvl x8, #1
 ; CHECK-SDAG-NEXT:    mov x9, sp
 ; CHECK-SDAG-NEXT:    mov x19, x0
 ; CHECK-SDAG-NEXT:    msub x9, x8, x8, x9
 ; CHECK-SDAG-NEXT:    mov sp, x9
-; CHECK-SDAG-NEXT:    sub x10, x29, #16
-; CHECK-SDAG-NEXT:    sub x20, x29, #80
+; CHECK-SDAG-NEXT:    sub x20, x29, #16
+; CHECK-SDAG-NEXT:    sub x21, x29, #80
 ; CHECK-SDAG-NEXT:    stp x9, x8, [x29, #-16]
-; CHECK-SDAG-NEXT:    msr TPIDR2_EL0, x10
-; CHECK-SDAG-NEXT:    str zt0, [x20]
+; CHECK-SDAG-NEXT:    msr TPIDR2_EL0, x20
+; CHECK-SDAG-NEXT:    str zt0, [x21]
 ; CHECK-SDAG-NEXT:    blr x0
 ; CHECK-SDAG-NEXT:    smstart za
-; CHECK-SDAG-NEXT:    ldr zt0, [x20]
+; CHECK-SDAG-NEXT:    ldr zt0, [x21]
 ; CHECK-SDAG-NEXT:    mrs x8, TPIDR2_EL0
-; CHECK-SDAG-NEXT:    sub x0, x29, #16
+; CHECK-SDAG-NEXT:    mov x0, x20
 ; CHECK-SDAG-NEXT:    cbnz x8, .LBB14_2
 ; CHECK-SDAG-NEXT:  // %bb.1:
 ; CHECK-SDAG-NEXT:    bl __arm_tpidr2_restore
 ; CHECK-SDAG-NEXT:  .LBB14_2:
 ; CHECK-SDAG-NEXT:    msr TPIDR2_EL0, xzr
-; CHECK-SDAG-NEXT:    str zt0, [x20]
+; CHECK-SDAG-NEXT:    str zt0, [x21]
 ; CHECK-SDAG-NEXT:    blr x19
-; CHECK-SDAG-NEXT:    ldr zt0, [x20]
+; CHECK-SDAG-NEXT:    ldr zt0, [x21]
 ; CHECK-SDAG-NEXT:    mov sp, x29
-; CHECK-SDAG-NEXT:    ldp x20, x19, [sp, #16] // 16-byte Folded Reload
-; CHECK-SDAG-NEXT:    ldp x29, x30, [sp], #32 // 16-byte Folded Reload
+; CHECK-SDAG-NEXT:    ldp x20, x19, [sp, #32] // 16-byte Folded Reload
+; CHECK-SDAG-NEXT:    ldr x21, [sp, #16] // 8-byte Reload
+; CHECK-SDAG-NEXT:    ldp x29, x30, [sp], #48 // 16-byte Folded Reload
 ; CHECK-SDAG-NEXT:    ret
 ;
 ; CHECK-LABEL: za_zt0_private_za_to_shared_za:

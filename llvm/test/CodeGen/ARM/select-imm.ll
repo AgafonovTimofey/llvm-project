@@ -573,9 +573,7 @@ define i1 @t10() {
 ; ARM-NEXT:    mvn r0, #2
 ; ARM-NEXT:    mvn r1, #7
 ; ARM-NEXT:    str r0, [sp, #4]
-; ARM-NEXT:    mvn r0, #7
-; ARM-NEXT:    str r0, [sp]
-; ARM-NEXT:    mvn r0, #2
+; ARM-NEXT:    str r1, [sp]
 ; ARM-NEXT:    bl __aeabi_idivmod
 ; ARM-NEXT:    sub r0, r1, r0, lsl #3
 ; ARM-NEXT:    add r0, r0, #3
@@ -592,11 +590,9 @@ define i1 @t10() {
 ; ARMT2-NEXT:    .pad #8
 ; ARMT2-NEXT:    sub sp, sp, #8
 ; ARMT2-NEXT:    mvn r0, #2
-; ARMT2-NEXT:    str r0, [sp, #4]
-; ARMT2-NEXT:    mvn r0, #7
-; ARMT2-NEXT:    str r0, [sp]
-; ARMT2-NEXT:    mvn r0, #2
 ; ARMT2-NEXT:    mvn r1, #7
+; ARMT2-NEXT:    str r0, [sp, #4]
+; ARMT2-NEXT:    str r1, [sp]
 ; ARMT2-NEXT:    bl __aeabi_idivmod
 ; ARMT2-NEXT:    sub r0, r1, r0, lsl #3
 ; ARMT2-NEXT:    add r0, r0, #3
@@ -634,11 +630,9 @@ define i1 @t10() {
 ; THUMB2-NEXT:    .pad #8
 ; THUMB2-NEXT:    sub sp, #8
 ; THUMB2-NEXT:    mvn r0, #2
-; THUMB2-NEXT:    str r0, [sp, #4]
-; THUMB2-NEXT:    mvn r0, #7
-; THUMB2-NEXT:    str r0, [sp]
-; THUMB2-NEXT:    mvn r0, #2
 ; THUMB2-NEXT:    mvn r1, #7
+; THUMB2-NEXT:    str r0, [sp, #4]
+; THUMB2-NEXT:    str r1, [sp]
 ; THUMB2-NEXT:    bl __aeabi_idivmod
 ; THUMB2-NEXT:    sub.w r0, r1, r0, lsl #3
 ; THUMB2-NEXT:    adds r0, #3

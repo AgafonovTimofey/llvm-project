@@ -1381,7 +1381,7 @@ define i32 @irreducibleCFG() #4 {
 ; ENABLE-NEXT:    movq _irreducibleCFGa@GOTPCREL(%rip), %rax
 ; ENABLE-NEXT:    movl (%rax), %edi
 ; ENABLE-NEXT:    xorl %ebx, %ebx
-; ENABLE-NEXT:    xorl %eax, %eax
+; ENABLE-NEXT:    movl %ebx, %eax
 ; ENABLE-NEXT:    callq _something
 ; ENABLE-NEXT:    jmp LBB16_5
 ; ENABLE-NEXT:  LBB16_3:
@@ -1424,7 +1424,7 @@ define i32 @irreducibleCFG() #4 {
 ; DISABLE-NEXT:    movq _irreducibleCFGa@GOTPCREL(%rip), %rax
 ; DISABLE-NEXT:    movl (%rax), %edi
 ; DISABLE-NEXT:    xorl %ebx, %ebx
-; DISABLE-NEXT:    xorl %eax, %eax
+; DISABLE-NEXT:    movl %ebx, %eax
 ; DISABLE-NEXT:    callq _something
 ; DISABLE-NEXT:    jmp LBB16_5
 ; DISABLE-NEXT:  LBB16_3:

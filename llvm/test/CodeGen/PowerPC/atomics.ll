@@ -292,14 +292,13 @@ define i64 @cas_weak_i64_release_monotonic(ptr %mem) {
 ; PPC32-NEXT:    stw r0, 20(r1)
 ; PPC32-NEXT:    .cfi_def_cfa_offset 16
 ; PPC32-NEXT:    .cfi_offset lr, 4
-; PPC32-NEXT:    li r4, 0
-; PPC32-NEXT:    stw r4, 12(r1)
 ; PPC32-NEXT:    li r5, 0
-; PPC32-NEXT:    stw r4, 8(r1)
 ; PPC32-NEXT:    addi r4, r1, 8
 ; PPC32-NEXT:    li r6, 1
 ; PPC32-NEXT:    li r7, 3
-; PPC32-NEXT:    li r8, 0
+; PPC32-NEXT:    mr r8, r5
+; PPC32-NEXT:    stw r5, 12(r1)
+; PPC32-NEXT:    stw r5, 8(r1)
 ; PPC32-NEXT:    bl __atomic_compare_exchange_8
 ; PPC32-NEXT:    lwz r4, 12(r1)
 ; PPC32-NEXT:    lwz r3, 8(r1)

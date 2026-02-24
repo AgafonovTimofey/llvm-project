@@ -51,10 +51,10 @@ define void @f1() nounwind {
 ; CHECK-NEXT:    lw $25, %call16(callee2)($16)
 ; CHECK-NEXT:    jalr $25
 ; CHECK-NEXT:    move $gp, $16
-; CHECK-NEXT:    addiu $1, $zero, 11
-; CHECK-NEXT:    lw $2, %got($CPI0_1)($16)
-; CHECK-NEXT:    lwc1 $f12, %lo($CPI0_1)($2)
-; CHECK-NEXT:    sb $1, 40($sp)
+; CHECK-NEXT:    addiu $5, $zero, 11
+; CHECK-NEXT:    lw $1, %got($CPI0_1)($16)
+; CHECK-NEXT:    lwc1 $f12, %lo($CPI0_1)($1)
+; CHECK-NEXT:    sb $5, 40($sp)
 ; CHECK-NEXT:    lw $1, 16($18)
 ; CHECK-NEXT:    lw $2, 20($18)
 ; CHECK-NEXT:    lw $3, 24($18)
@@ -70,7 +70,6 @@ define void @f1() nounwind {
 ; CHECK-NEXT:    lw $7, 4($18)
 ; CHECK-NEXT:    lw $6, %lo(f1.s1)($17)
 ; CHECK-NEXT:    lw $25, %call16(callee3)($16)
-; CHECK-NEXT:    addiu $5, $zero, 11
 ; CHECK-NEXT:    jalr $25
 ; CHECK-NEXT:    move $gp, $16
 ; CHECK-NEXT:    lw $16, 48($sp) # 4-byte Folded Reload

@@ -4465,18 +4465,16 @@ define void @calli32_4() {
 ; MIPS32-NEXT:    .cfi_def_cfa_offset 40
 ; MIPS32-NEXT:    sw $ra, 36($sp) # 4-byte Folded Spill
 ; MIPS32-NEXT:    .cfi_offset 31, -4
-; MIPS32-NEXT:    addiu $1, $zero, 9
-; MIPS32-NEXT:    addiu $2, $zero, 10
-; MIPS32-NEXT:    sw $2, 28($sp)
-; MIPS32-NEXT:    sw $1, 24($sp)
+; MIPS32-NEXT:    addiu $6, $zero, 9
+; MIPS32-NEXT:    addiu $7, $zero, 10
+; MIPS32-NEXT:    sw $7, 28($sp)
+; MIPS32-NEXT:    sw $6, 24($sp)
 ; MIPS32-NEXT:    addiu $1, $zero, 8
 ; MIPS32-NEXT:    sw $1, 20($sp)
 ; MIPS32-NEXT:    addiu $1, $zero, 12
 ; MIPS32-NEXT:    sw $1, 16($sp)
 ; MIPS32-NEXT:    addiu $4, $zero, 6
 ; MIPS32-NEXT:    addiu $5, $zero, 7
-; MIPS32-NEXT:    addiu $6, $zero, 9
-; MIPS32-NEXT:    addiu $7, $zero, 10
 ; MIPS32-NEXT:    jal i32_4
 ; MIPS32-NEXT:    nop
 ; MIPS32-NEXT:    lui $1, %hi(gv4i32)
@@ -4528,18 +4526,16 @@ define void @calli32_4() {
 ; MIPS32R5-NEXT:    .cfi_def_cfa_offset 40
 ; MIPS32R5-NEXT:    sw $ra, 36($sp) # 4-byte Folded Spill
 ; MIPS32R5-NEXT:    .cfi_offset 31, -4
-; MIPS32R5-NEXT:    addiu $1, $zero, 9
-; MIPS32R5-NEXT:    addiu $2, $zero, 10
-; MIPS32R5-NEXT:    sw $2, 28($sp)
-; MIPS32R5-NEXT:    sw $1, 24($sp)
+; MIPS32R5-NEXT:    addiu $6, $zero, 9
+; MIPS32R5-NEXT:    addiu $7, $zero, 10
+; MIPS32R5-NEXT:    sw $7, 28($sp)
+; MIPS32R5-NEXT:    sw $6, 24($sp)
 ; MIPS32R5-NEXT:    addiu $1, $zero, 8
 ; MIPS32R5-NEXT:    sw $1, 20($sp)
 ; MIPS32R5-NEXT:    addiu $1, $zero, 12
 ; MIPS32R5-NEXT:    sw $1, 16($sp)
 ; MIPS32R5-NEXT:    addiu $4, $zero, 6
 ; MIPS32R5-NEXT:    addiu $5, $zero, 7
-; MIPS32R5-NEXT:    addiu $6, $zero, 9
-; MIPS32R5-NEXT:    addiu $7, $zero, 10
 ; MIPS32R5-NEXT:    jal i32_4
 ; MIPS32R5-NEXT:    nop
 ; MIPS32R5-NEXT:    insert.w $w0[0], $2

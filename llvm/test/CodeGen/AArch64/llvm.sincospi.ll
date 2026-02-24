@@ -143,17 +143,17 @@ define { <3 x float>, <3 x float> } @test_sincospi_v3f32(<3 x float> %a) #0 {
 ; CHECK-NEXT:    ; kill: def $s0 killed $s0 killed $q0
 ; CHECK-NEXT:    bl ___sincospif
 ; CHECK-NEXT:    ldr q0, [sp] ; 16-byte Reload
-; CHECK-NEXT:    add x0, sp, #36
-; CHECK-NEXT:    add x1, sp, #32
 ; CHECK-NEXT:    add x19, sp, #36
 ; CHECK-NEXT:    add x20, sp, #32
+; CHECK-NEXT:    mov x0, x19
+; CHECK-NEXT:    mov x1, x20
 ; CHECK-NEXT:    mov s0, v0[1]
 ; CHECK-NEXT:    bl ___sincospif
 ; CHECK-NEXT:    ldr q0, [sp] ; 16-byte Reload
-; CHECK-NEXT:    add x0, sp, #44
-; CHECK-NEXT:    add x1, sp, #40
 ; CHECK-NEXT:    add x21, sp, #44
 ; CHECK-NEXT:    add x22, sp, #40
+; CHECK-NEXT:    mov x0, x21
+; CHECK-NEXT:    mov x1, x22
 ; CHECK-NEXT:    mov s0, v0[2]
 ; CHECK-NEXT:    bl ___sincospif
 ; CHECK-NEXT:    ldp s1, s0, [sp, #24]
@@ -183,10 +183,10 @@ define { <2 x float>, <2 x float> } @test_sincospi_v2f32(<2 x float> %a) #0 {
 ; CHECK-NEXT:    ; kill: def $s0 killed $s0 killed $q0
 ; CHECK-NEXT:    bl ___sincospif
 ; CHECK-NEXT:    ldr q0, [sp] ; 16-byte Reload
-; CHECK-NEXT:    add x0, sp, #20
-; CHECK-NEXT:    add x1, sp, #16
 ; CHECK-NEXT:    add x19, sp, #20
 ; CHECK-NEXT:    add x20, sp, #16
+; CHECK-NEXT:    mov x0, x19
+; CHECK-NEXT:    mov x1, x20
 ; CHECK-NEXT:    mov s0, v0[1]
 ; CHECK-NEXT:    bl ___sincospif
 ; CHECK-NEXT:    ldp s1, s0, [sp, #24]
@@ -230,10 +230,10 @@ define { <2 x double>, <2 x double> } @test_sincospi_v2f64(<2 x double> %a) #0 {
 ; CHECK-NEXT:    ; kill: def $d0 killed $d0 killed $q0
 ; CHECK-NEXT:    bl ___sincospi
 ; CHECK-NEXT:    ldr q0, [sp] ; 16-byte Reload
-; CHECK-NEXT:    add x0, sp, #24
-; CHECK-NEXT:    add x1, sp, #16
 ; CHECK-NEXT:    add x19, sp, #24
 ; CHECK-NEXT:    add x20, sp, #16
+; CHECK-NEXT:    mov x0, x19
+; CHECK-NEXT:    mov x1, x20
 ; CHECK-NEXT:    mov d0, v0[1]
 ; CHECK-NEXT:    bl ___sincospi
 ; CHECK-NEXT:    ldp d1, d0, [sp, #32]

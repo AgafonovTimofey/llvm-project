@@ -16,10 +16,9 @@ define void @other_regression(i1 %cmp.not.i.i.i) {
 ; CHECK-NEXT:    shrl %cl, %edx
 ; CHECK-NEXT:    imull %eax, %edx
 ; CHECK-NEXT:    movslq %edx, %rsi
-; CHECK-NEXT:    xorl %eax, %eax
 ; CHECK-NEXT:    xorl %edi, %edi
-; CHECK-NEXT:    xorl %edx, %edx
-; CHECK-NEXT:    callq *%rax
+; CHECK-NEXT:    movq %rdi, %rdx
+; CHECK-NEXT:    callq *%rdi
 entry:
   br label %for.cond10.preheader
 

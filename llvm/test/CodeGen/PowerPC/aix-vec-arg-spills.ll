@@ -18,7 +18,7 @@ define double @caller() {
 ; 32BIT-NEXT:    lis 4, 16392
 ; 32BIT-NEXT:    stw 0, 200(1)
 ; 32BIT-NEXT:    li 3, 0
-; 32BIT-NEXT:    xxlxor 0, 0, 0
+; 32BIT-NEXT:    xxlxor 34, 34, 34
 ; 32BIT-NEXT:    xxlxor 1, 1, 1
 ; 32BIT-NEXT:    stw 4, 180(1)
 ; 32BIT-NEXT:    lis 4, 16384
@@ -32,42 +32,41 @@ define double @caller() {
 ; 32BIT-NEXT:    li 3, 136
 ; 32BIT-NEXT:    stw 4, 164(1)
 ; 32BIT-NEXT:    li 4, 120
-; 32BIT-NEXT:    stxvw4x 0, 1, 3
+; 32BIT-NEXT:    stxvw4x 34, 1, 3
 ; 32BIT-NEXT:    li 3, 104
-; 32BIT-NEXT:    stxvw4x 0, 1, 4
-; 32BIT-NEXT:    stxvw4x 0, 1, 3
+; 32BIT-NEXT:    stxvw4x 34, 1, 4
+; 32BIT-NEXT:    stxvw4x 34, 1, 3
 ; 32BIT-NEXT:    li 3, 88
 ; 32BIT-NEXT:    li 4, 72
 ; 32BIT-NEXT:    xxlxor 2, 2, 2
-; 32BIT-NEXT:    stxvw4x 0, 1, 3
-; 32BIT-NEXT:    stxvw4x 0, 1, 4
+; 32BIT-NEXT:    stxvw4x 34, 1, 3
+; 32BIT-NEXT:    stxvw4x 34, 1, 4
 ; 32BIT-NEXT:    li 4, 512
 ; 32BIT-NEXT:    stw 4, 152(1)
 ; 32BIT-NEXT:    lwz 4, L..C0(2) # %const.0
 ; 32BIT-NEXT:    li 3, 48
-; 32BIT-NEXT:    xxlxor 34, 34, 34
-; 32BIT-NEXT:    xxlxor 35, 35, 35
-; 32BIT-NEXT:    xxlxor 36, 36, 36
-; 32BIT-NEXT:    xxlxor 37, 37, 37
-; 32BIT-NEXT:    xxlxor 38, 38, 38
-; 32BIT-NEXT:    lxvd2x 0, 0, 4
-; 32BIT-NEXT:    xxlxor 39, 39, 39
-; 32BIT-NEXT:    xxlxor 40, 40, 40
-; 32BIT-NEXT:    li 4, 256
-; 32BIT-NEXT:    xxlxor 41, 41, 41
-; 32BIT-NEXT:    xxlxor 42, 42, 42
-; 32BIT-NEXT:    xxlxor 43, 43, 43
-; 32BIT-NEXT:    xxlxor 44, 44, 44
-; 32BIT-NEXT:    xxlxor 45, 45, 45
-; 32BIT-NEXT:    stxvd2x 0, 1, 3
-; 32BIT-NEXT:    li 3, 128
 ; 32BIT-NEXT:    xxlxor 3, 3, 3
 ; 32BIT-NEXT:    xxlxor 4, 4, 4
 ; 32BIT-NEXT:    xxlxor 5, 5, 5
 ; 32BIT-NEXT:    xxlxor 6, 6, 6
 ; 32BIT-NEXT:    xxlxor 7, 7, 7
+; 32BIT-NEXT:    lxvd2x 0, 0, 4
 ; 32BIT-NEXT:    xxlxor 8, 8, 8
 ; 32BIT-NEXT:    xxlxor 9, 9, 9
+; 32BIT-NEXT:    li 4, 256
+; 32BIT-NEXT:    vmr 3, 2
+; 32BIT-NEXT:    vmr 4, 2
+; 32BIT-NEXT:    vmr 5, 2
+; 32BIT-NEXT:    vmr 6, 2
+; 32BIT-NEXT:    vmr 7, 2
+; 32BIT-NEXT:    stxvd2x 0, 1, 3
+; 32BIT-NEXT:    li 3, 128
+; 32BIT-NEXT:    vmr 8, 2
+; 32BIT-NEXT:    vmr 9, 2
+; 32BIT-NEXT:    vmr 10, 2
+; 32BIT-NEXT:    vmr 11, 2
+; 32BIT-NEXT:    vmr 12, 2
+; 32BIT-NEXT:    vmr 13, 2
 ; 32BIT-NEXT:    xxlxor 10, 10, 10
 ; 32BIT-NEXT:    xxlxor 11, 11, 11
 ; 32BIT-NEXT:    xxlxor 12, 12, 12
@@ -86,50 +85,48 @@ define double @caller() {
 ; 64BIT-NEXT:    li 3, 2049
 ; 64BIT-NEXT:    std 0, 240(1)
 ; 64BIT-NEXT:    li 4, 1
-; 64BIT-NEXT:    xxlxor 0, 0, 0
-; 64BIT-NEXT:    xxlxor 1, 1, 1
+; 64BIT-NEXT:    xxlxor 34, 34, 34
+; 64BIT-NEXT:    li 5, 144
 ; 64BIT-NEXT:    rldic 3, 3, 51, 1
 ; 64BIT-NEXT:    rldic 4, 4, 62, 1
+; 64BIT-NEXT:    xxlxor 1, 1, 1
 ; 64BIT-NEXT:    xxlxor 2, 2, 2
-; 64BIT-NEXT:    xxlxor 34, 34, 34
+; 64BIT-NEXT:    xxlxor 3, 3, 3
+; 64BIT-NEXT:    xxlxor 4, 4, 4
 ; 64BIT-NEXT:    std 3, 216(1)
 ; 64BIT-NEXT:    li 3, 1023
 ; 64BIT-NEXT:    std 4, 208(1)
 ; 64BIT-NEXT:    li 4, 0
-; 64BIT-NEXT:    xxlxor 35, 35, 35
-; 64BIT-NEXT:    xxlxor 36, 36, 36
 ; 64BIT-NEXT:    rldic 3, 3, 52, 2
 ; 64BIT-NEXT:    std 4, 192(1)
-; 64BIT-NEXT:    xxlxor 37, 37, 37
-; 64BIT-NEXT:    xxlxor 38, 38, 38
-; 64BIT-NEXT:    xxlxor 39, 39, 39
-; 64BIT-NEXT:    std 3, 200(1)
-; 64BIT-NEXT:    li 3, 160
-; 64BIT-NEXT:    xxlxor 40, 40, 40
-; 64BIT-NEXT:    stxvw4x 0, 1, 3
-; 64BIT-NEXT:    li 3, 144
-; 64BIT-NEXT:    xxlxor 41, 41, 41
-; 64BIT-NEXT:    xxlxor 42, 42, 42
-; 64BIT-NEXT:    stxvw4x 0, 1, 3
-; 64BIT-NEXT:    li 3, 128
-; 64BIT-NEXT:    xxlxor 43, 43, 43
-; 64BIT-NEXT:    stxvw4x 0, 1, 3
-; 64BIT-NEXT:    std 4, 176(1)
-; 64BIT-NEXT:    ld 4, L..C0(2) # %const.0
-; 64BIT-NEXT:    li 3, 512
-; 64BIT-NEXT:    xxlxor 44, 44, 44
-; 64BIT-NEXT:    xxlxor 45, 45, 45
-; 64BIT-NEXT:    lxvd2x 0, 0, 4
-; 64BIT-NEXT:    std 3, 184(1)
-; 64BIT-NEXT:    li 3, 80
-; 64BIT-NEXT:    li 4, 256
-; 64BIT-NEXT:    xxlxor 3, 3, 3
-; 64BIT-NEXT:    xxlxor 4, 4, 4
 ; 64BIT-NEXT:    xxlxor 5, 5, 5
-; 64BIT-NEXT:    stxvd2x 0, 1, 3
-; 64BIT-NEXT:    li 3, 128
 ; 64BIT-NEXT:    xxlxor 6, 6, 6
 ; 64BIT-NEXT:    xxlxor 7, 7, 7
+; 64BIT-NEXT:    std 3, 200(1)
+; 64BIT-NEXT:    li 3, 160
+; 64BIT-NEXT:    vmr 3, 2
+; 64BIT-NEXT:    vmr 4, 2
+; 64BIT-NEXT:    vmr 5, 2
+; 64BIT-NEXT:    stxvw4x 34, 1, 3
+; 64BIT-NEXT:    li 3, 128
+; 64BIT-NEXT:    stxvw4x 34, 1, 5
+; 64BIT-NEXT:    li 5, 512
+; 64BIT-NEXT:    stxvw4x 34, 1, 3
+; 64BIT-NEXT:    std 4, 176(1)
+; 64BIT-NEXT:    ld 4, L..C0(2) # %const.0
+; 64BIT-NEXT:    std 5, 184(1)
+; 64BIT-NEXT:    li 5, 80
+; 64BIT-NEXT:    vmr 6, 2
+; 64BIT-NEXT:    vmr 7, 2
+; 64BIT-NEXT:    vmr 8, 2
+; 64BIT-NEXT:    lxvd2x 0, 0, 4
+; 64BIT-NEXT:    li 4, 256
+; 64BIT-NEXT:    vmr 9, 2
+; 64BIT-NEXT:    vmr 10, 2
+; 64BIT-NEXT:    vmr 11, 2
+; 64BIT-NEXT:    vmr 12, 2
+; 64BIT-NEXT:    stxvd2x 0, 1, 5
+; 64BIT-NEXT:    vmr 13, 2
 ; 64BIT-NEXT:    xxlxor 8, 8, 8
 ; 64BIT-NEXT:    xxlxor 9, 9, 9
 ; 64BIT-NEXT:    xxlxor 10, 10, 10

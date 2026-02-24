@@ -5,13 +5,12 @@ define void @pass_va(i32 %count, ...) nounwind {
 ; CHECK-LABEL: pass_va:
 ; CHECK:       // %bb.0: // %entry
 ; CHECK-NEXT:    str x30, [sp, #-80]! // 8-byte Folded Spill
-; CHECK-NEXT:    add x8, sp, #24
 ; CHECK-NEXT:    add x0, sp, #24
 ; CHECK-NEXT:    stp x1, x2, [sp, #24]
 ; CHECK-NEXT:    stp x3, x4, [sp, #40]
 ; CHECK-NEXT:    stp x5, x6, [sp, #56]
 ; CHECK-NEXT:    str x7, [sp, #72]
-; CHECK-NEXT:    str x8, [sp, #8]
+; CHECK-NEXT:    str x0, [sp, #8]
 ; CHECK-NEXT:    bl other_func
 ; CHECK-NEXT:    ldr x30, [sp], #80 // 8-byte Folded Reload
 ; CHECK-NEXT:    ret
@@ -32,9 +31,8 @@ define ptr @f9(i64 %a0, i64 %a1, i64 %a2, i64 %a3, i64 %a4, i64 %a5, i64 %a6, i6
 ; CHECK-LABEL: f9:
 ; CHECK:       // %bb.0: // %entry
 ; CHECK-NEXT:    sub sp, sp, #16
-; CHECK-NEXT:    add x8, sp, #24
 ; CHECK-NEXT:    add x0, sp, #24
-; CHECK-NEXT:    str x8, [sp, #8]
+; CHECK-NEXT:    str x0, [sp, #8]
 ; CHECK-NEXT:    add sp, sp, #16
 ; CHECK-NEXT:    ret
 entry:
@@ -48,9 +46,8 @@ define ptr @f8(i64 %a0, i64 %a1, i64 %a2, i64 %a3, i64 %a4, i64 %a5, i64 %a6, i6
 ; CHECK-LABEL: f8:
 ; CHECK:       // %bb.0: // %entry
 ; CHECK-NEXT:    sub sp, sp, #16
-; CHECK-NEXT:    add x8, sp, #16
 ; CHECK-NEXT:    add x0, sp, #16
-; CHECK-NEXT:    str x8, [sp, #8]
+; CHECK-NEXT:    str x0, [sp, #8]
 ; CHECK-NEXT:    add sp, sp, #16
 ; CHECK-NEXT:    ret
 entry:
@@ -64,10 +61,9 @@ define ptr @f7(i64 %a0, i64 %a1, i64 %a2, i64 %a3, i64 %a4, i64 %a5, i64 %a6, ..
 ; CHECK-LABEL: f7:
 ; CHECK:       // %bb.0: // %entry
 ; CHECK-NEXT:    sub sp, sp, #32
-; CHECK-NEXT:    add x8, sp, #24
 ; CHECK-NEXT:    add x0, sp, #24
 ; CHECK-NEXT:    str x7, [sp, #24]
-; CHECK-NEXT:    str x8, [sp, #8]
+; CHECK-NEXT:    str x0, [sp, #8]
 ; CHECK-NEXT:    add sp, sp, #32
 ; CHECK-NEXT:    ret
 entry:
@@ -107,41 +103,45 @@ define i32 @fp(ptr, i64, ptr, ...) local_unnamed_addr #6 {
 ; CHECK-LABEL: fp:
 ; CHECK:       .seh_proc fp
 ; CHECK-NEXT:  // %bb.0:
-; CHECK-NEXT:    stp x19, x20, [sp, #-96]! // 16-byte Folded Spill
-; CHECK-NEXT:    .seh_save_regp_x x19, 96
-; CHECK-NEXT:    str x21, [sp, #16] // 8-byte Spill
-; CHECK-NEXT:    .seh_save_reg x21, 16
-; CHECK-NEXT:    stp x29, x30, [sp, #24] // 16-byte Folded Spill
-; CHECK-NEXT:    .seh_save_fplr 24
-; CHECK-NEXT:    add x29, sp, #24
-; CHECK-NEXT:    .seh_add_fp 24
+; CHECK-NEXT:    sub sp, sp, #112
+; CHECK-NEXT:    .seh_stackalloc 112
+; CHECK-NEXT:    stp x19, x20, [sp, #16] // 16-byte Folded Spill
+; CHECK-NEXT:    .seh_save_regp x19, 16
+; CHECK-NEXT:    stp x21, x22, [sp, #32] // 16-byte Folded Spill
+; CHECK-NEXT:    .seh_save_regp x21, 32
+; CHECK-NEXT:    stp x29, x30, [sp, #48] // 16-byte Folded Spill
+; CHECK-NEXT:    .seh_save_fplr 48
+; CHECK-NEXT:    add x29, sp, #48
+; CHECK-NEXT:    .seh_add_fp 48
 ; CHECK-NEXT:    .seh_endprologue
-; CHECK-NEXT:    add x8, x29, #32
+; CHECK-NEXT:    add x22, x29, #24
 ; CHECK-NEXT:    mov x19, x2
 ; CHECK-NEXT:    mov x20, x1
 ; CHECK-NEXT:    mov x21, x0
-; CHECK-NEXT:    stp x3, x4, [x29, #32]
-; CHECK-NEXT:    stp x5, x6, [x29, #48]
-; CHECK-NEXT:    str x7, [x29, #64]
-; CHECK-NEXT:    str x8, [x29, #16]
+; CHECK-NEXT:    stp x3, x4, [x29, #24]
+; CHECK-NEXT:    stp x5, x6, [x29, #40]
+; CHECK-NEXT:    str x7, [x29, #56]
+; CHECK-NEXT:    str x22, [sp, #8]
 ; CHECK-NEXT:    bl __local_stdio_printf_options
 ; CHECK-NEXT:    ldr x8, [x0]
-; CHECK-NEXT:    add x5, x29, #32
 ; CHECK-NEXT:    mov x1, x21
 ; CHECK-NEXT:    mov x2, x20
 ; CHECK-NEXT:    mov x3, x19
 ; CHECK-NEXT:    mov x4, xzr
+; CHECK-NEXT:    mov x5, x22
 ; CHECK-NEXT:    orr x0, x8, #0x2
 ; CHECK-NEXT:    bl __stdio_common_vsprintf
 ; CHECK-NEXT:    cmn w0, #1
 ; CHECK-NEXT:    csinv w0, w0, wzr, gt
 ; CHECK-NEXT:    .seh_startepilogue
-; CHECK-NEXT:    ldp x29, x30, [sp, #24] // 16-byte Folded Reload
-; CHECK-NEXT:    .seh_save_fplr 24
-; CHECK-NEXT:    ldr x21, [sp, #16] // 8-byte Reload
-; CHECK-NEXT:    .seh_save_reg x21, 16
-; CHECK-NEXT:    ldp x19, x20, [sp], #96 // 16-byte Folded Reload
-; CHECK-NEXT:    .seh_save_regp_x x19, 96
+; CHECK-NEXT:    ldp x29, x30, [sp, #48] // 16-byte Folded Reload
+; CHECK-NEXT:    .seh_save_fplr 48
+; CHECK-NEXT:    ldp x21, x22, [sp, #32] // 16-byte Folded Reload
+; CHECK-NEXT:    .seh_save_regp x21, 32
+; CHECK-NEXT:    ldp x19, x20, [sp, #16] // 16-byte Folded Reload
+; CHECK-NEXT:    .seh_save_regp x19, 16
+; CHECK-NEXT:    add sp, sp, #112
+; CHECK-NEXT:    .seh_stackalloc 112
 ; CHECK-NEXT:    .seh_endepilogue
 ; CHECK-NEXT:    ret
 ; CHECK-NEXT:    .seh_endfunclet
@@ -244,39 +244,39 @@ define i32 @snprintf(ptr, i64, ptr, ...) local_unnamed_addr #5 {
 ; CHECK-LABEL: snprintf:
 ; CHECK:       .seh_proc snprintf
 ; CHECK-NEXT:  // %bb.0:
-; CHECK-NEXT:    sub sp, sp, #96
-; CHECK-NEXT:    .seh_stackalloc 96
-; CHECK-NEXT:    stp x19, x20, [sp, #16] // 16-byte Folded Spill
-; CHECK-NEXT:    .seh_save_regp x19, 16
-; CHECK-NEXT:    stp x21, x30, [sp, #32] // 16-byte Folded Spill
-; CHECK-NEXT:    .seh_save_lrpair x21, 32
+; CHECK-NEXT:    stp x19, x20, [sp, #-96]! // 16-byte Folded Spill
+; CHECK-NEXT:    .seh_save_regp_x x19, 96
+; CHECK-NEXT:    stp x21, x22, [sp, #16] // 16-byte Folded Spill
+; CHECK-NEXT:    .seh_save_regp x21, 16
+; CHECK-NEXT:    str x30, [sp, #32] // 8-byte Spill
+; CHECK-NEXT:    .seh_save_reg x30, 32
 ; CHECK-NEXT:    .seh_endprologue
-; CHECK-NEXT:    add x8, sp, #56
+; CHECK-NEXT:    add x22, sp, #56
 ; CHECK-NEXT:    mov x19, x2
 ; CHECK-NEXT:    mov x20, x1
 ; CHECK-NEXT:    mov x21, x0
 ; CHECK-NEXT:    stp x3, x4, [sp, #56]
 ; CHECK-NEXT:    stp x5, x6, [sp, #72]
 ; CHECK-NEXT:    str x7, [sp, #88]
-; CHECK-NEXT:    str x8, [sp, #8]
+; CHECK-NEXT:    str x22, [sp, #40]
 ; CHECK-NEXT:    bl __local_stdio_printf_options
 ; CHECK-NEXT:    ldr x8, [x0]
-; CHECK-NEXT:    add x5, sp, #56
 ; CHECK-NEXT:    mov x1, x21
 ; CHECK-NEXT:    mov x2, x20
 ; CHECK-NEXT:    mov x3, x19
 ; CHECK-NEXT:    mov x4, xzr
+; CHECK-NEXT:    mov x5, x22
 ; CHECK-NEXT:    orr x0, x8, #0x2
 ; CHECK-NEXT:    bl __stdio_common_vsprintf
 ; CHECK-NEXT:    cmn w0, #1
 ; CHECK-NEXT:    csinv w0, w0, wzr, gt
 ; CHECK-NEXT:    .seh_startepilogue
-; CHECK-NEXT:    ldp x21, x30, [sp, #32] // 16-byte Folded Reload
-; CHECK-NEXT:    .seh_save_lrpair x21, 32
-; CHECK-NEXT:    ldp x19, x20, [sp, #16] // 16-byte Folded Reload
-; CHECK-NEXT:    .seh_save_regp x19, 16
-; CHECK-NEXT:    add sp, sp, #96
-; CHECK-NEXT:    .seh_stackalloc 96
+; CHECK-NEXT:    ldr x30, [sp, #32] // 8-byte Reload
+; CHECK-NEXT:    .seh_save_reg x30, 32
+; CHECK-NEXT:    ldp x21, x22, [sp, #16] // 16-byte Folded Reload
+; CHECK-NEXT:    .seh_save_regp x21, 16
+; CHECK-NEXT:    ldp x19, x20, [sp], #96 // 16-byte Folded Reload
+; CHECK-NEXT:    .seh_save_regp_x x19, 96
 ; CHECK-NEXT:    .seh_endepilogue
 ; CHECK-NEXT:    ret
 ; CHECK-NEXT:    .seh_endfunclet

@@ -73,10 +73,9 @@ entry:
 
   ; On i686, the call to __guard_check_icall_fptr should come immediately before the call to the target function.
   ; X86-LABEL: func_cf
-  ; X86:         movl  $_target_func, %esi
   ; X86:         movl  $_target_func, %ecx
   ; X86:         calll *___guard_check_icall_fptr
-  ; X86-NEXT:  calll *%esi
+  ; X86-NEXT:  calll *%ecx
 
   ; On x86_64, __guard_dispatch_icall_fptr tail calls the function, so there should be only one call instruction.
   ; X64-LABEL: func_cf
@@ -105,11 +104,10 @@ lpad:                                             ; preds = %entry
 
   ; On i686, the call to __guard_check_icall_fptr should come immediately before the call to the target function.
   ; X86-LABEL: func_cf_invoke
-  ; X86:         movl  $_target_func, %esi
   ; X86:         movl  $_target_func, %ecx
   ; X86:         calll *___guard_check_icall_fptr
   ; X86_MINGW-NEXT: Ltmp0:
-  ; X86-NEXT:  calll *%esi
+  ; X86-NEXT:  calll *%ecx
   ; X86:       # %invoke.cont
   ; X86:       # %lpad
 
@@ -170,10 +168,9 @@ entry:
 
   ; On i686, the call to __guard_check_icall_fptr should come immediately before the call to the target function.
   ; X86-LABEL: func_cf_doubles
-  ; X86:         movl  $_target_func_doubles, %esi
   ; X86:         movl  $_target_func_doubles, %ecx
   ; X86:         calll *___guard_check_icall_fptr
-  ; X86:         calll *%esi
+  ; X86:         calll *%ecx
 
 
   ; On x86_64, __guard_dispatch_icall_fptr tail calls the function, so there should be only one call instruction.
@@ -206,8 +203,7 @@ entry:
   ; X86-LABEL: func_cf_tail
   ; X86:         movl  $_target_func, %ecx
   ; X86:         calll *___guard_check_icall_fptr
-  ; X86:         movl $_target_func, %eax
-  ; X86:         jmpl	*%eax                  # TAILCALL
+  ; X86:         jmpl	*%ecx                  # TAILCALL
   ; X86-NOT:   calll
 
   ; X64-LABEL: func_cf_tail

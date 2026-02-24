@@ -28,18 +28,18 @@ define double @caller() {
   ; MIR32-NEXT:   STW renamable $r3, 160, $r1 :: (store (s32) into unknown-address + 4)
   ; MIR32-NEXT:   STW killed renamable $r3, 156, $r1 :: (store (s32))
   ; MIR32-NEXT:   ADJCALLSTACKDOWN 188, 0, implicit-def dead $r1, implicit $r1
-  ; MIR32-NEXT:   renamable $vsl0 = XXLXORz
+  ; MIR32-NEXT:   renamable $v2 = XXLXORz
   ; MIR32-NEXT:   renamable $r3 = LI 136
   ; MIR32-NEXT:   renamable $r4 = LI 120
-  ; MIR32-NEXT:   STXVW4X renamable $vsl0, $r1, killed renamable $r3 :: (store (s128), align 8)
+  ; MIR32-NEXT:   STXVW4X renamable $v2, $r1, killed renamable $r3 :: (store (s128), align 8)
   ; MIR32-NEXT:   renamable $r3 = LI 104
-  ; MIR32-NEXT:   STXVW4X renamable $vsl0, $r1, killed renamable $r4 :: (store (s128), align 8)
-  ; MIR32-NEXT:   STXVW4X renamable $vsl0, $r1, killed renamable $r3 :: (store (s128), align 8)
+  ; MIR32-NEXT:   STXVW4X renamable $v2, $r1, killed renamable $r4 :: (store (s128), align 8)
+  ; MIR32-NEXT:   STXVW4X renamable $v2, $r1, killed renamable $r3 :: (store (s128), align 8)
   ; MIR32-NEXT:   renamable $r3 = LI 88
   ; MIR32-NEXT:   renamable $r4 = LI 72
-  ; MIR32-NEXT:   STXVW4X renamable $vsl0, $r1, killed renamable $r3 :: (store (s128), align 8)
+  ; MIR32-NEXT:   STXVW4X renamable $v2, $r1, killed renamable $r3 :: (store (s128), align 8)
   ; MIR32-NEXT:   renamable $r3 = LI 48
-  ; MIR32-NEXT:   STXVW4X killed renamable $vsl0, $r1, killed renamable $r4 :: (store (s128), align 8)
+  ; MIR32-NEXT:   STXVW4X renamable $v2, $r1, killed renamable $r4 :: (store (s128), align 8)
   ; MIR32-NEXT:   renamable $r4 = LI 512
   ; MIR32-NEXT:   STW killed renamable $r4, 152, $r1 :: (store (s32) into stack + 152, align 8, basealign 16)
   ; MIR32-NEXT:   renamable $r4 = LWZtoc %const.0, $r2 :: (load (s32) from got)
@@ -47,20 +47,6 @@ define double @caller() {
   ; MIR32-NEXT:   STXVD2X killed renamable $vsl0, $r1, killed renamable $r3 :: (store (s128) into stack + 48)
   ; MIR32-NEXT:   $f1 = XXLXORdpz
   ; MIR32-NEXT:   $f2 = XXLXORdpz
-  ; MIR32-NEXT:   $v2 = XXLXORz
-  ; MIR32-NEXT:   $v3 = XXLXORz
-  ; MIR32-NEXT:   $v4 = XXLXORz
-  ; MIR32-NEXT:   $v5 = XXLXORz
-  ; MIR32-NEXT:   $v6 = XXLXORz
-  ; MIR32-NEXT:   $v7 = XXLXORz
-  ; MIR32-NEXT:   $v8 = XXLXORz
-  ; MIR32-NEXT:   $r3 = LI 128
-  ; MIR32-NEXT:   $r4 = LI 256
-  ; MIR32-NEXT:   $v9 = XXLXORz
-  ; MIR32-NEXT:   $v10 = XXLXORz
-  ; MIR32-NEXT:   $v11 = XXLXORz
-  ; MIR32-NEXT:   $v12 = XXLXORz
-  ; MIR32-NEXT:   $v13 = XXLXORz
   ; MIR32-NEXT:   $f3 = XXLXORdpz
   ; MIR32-NEXT:   $f4 = XXLXORdpz
   ; MIR32-NEXT:   $f5 = XXLXORdpz
@@ -68,11 +54,24 @@ define double @caller() {
   ; MIR32-NEXT:   $f7 = XXLXORdpz
   ; MIR32-NEXT:   $f8 = XXLXORdpz
   ; MIR32-NEXT:   $f9 = XXLXORdpz
+  ; MIR32-NEXT:   $r3 = LI 128
+  ; MIR32-NEXT:   $r4 = LI 256
+  ; MIR32-NEXT:   $v3 = COPY renamable $v2
+  ; MIR32-NEXT:   $v4 = COPY renamable $v2
+  ; MIR32-NEXT:   $v5 = COPY renamable $v2
+  ; MIR32-NEXT:   $v6 = COPY renamable $v2
+  ; MIR32-NEXT:   $v7 = COPY renamable $v2
+  ; MIR32-NEXT:   $v8 = COPY renamable $v2
+  ; MIR32-NEXT:   $v9 = COPY renamable $v2
+  ; MIR32-NEXT:   $v10 = COPY renamable $v2
+  ; MIR32-NEXT:   $v11 = COPY renamable $v2
+  ; MIR32-NEXT:   $v12 = COPY renamable $v2
+  ; MIR32-NEXT:   $v13 = COPY renamable $v2
   ; MIR32-NEXT:   $f10 = XXLXORdpz
   ; MIR32-NEXT:   $f11 = XXLXORdpz
   ; MIR32-NEXT:   $f12 = XXLXORdpz
   ; MIR32-NEXT:   $f13 = XXLXORdpz
-  ; MIR32-NEXT:   BL_NOP <mcsymbol .callee[PR]>, csr_aix32_altivec, implicit-def dead $lr, implicit $rm, implicit $r3, implicit $r4, implicit $f1, implicit killed $f2, implicit killed $v2, implicit killed $v3, implicit killed $v4, implicit killed $v5, implicit killed $v6, implicit killed $v7, implicit killed $v8, implicit killed $v9, implicit killed $v10, implicit killed $v11, implicit killed $v12, implicit killed $v13, implicit killed $f3, implicit killed $f4, implicit killed $f5, implicit killed $f6, implicit killed $f7, implicit killed $f8, implicit killed $f9, implicit killed $f10, implicit killed $f11, implicit killed $f12, implicit killed $f13, implicit $r2, implicit-def $r1, implicit-def $f1
+  ; MIR32-NEXT:   BL_NOP <mcsymbol .callee[PR]>, csr_aix32_altivec, implicit-def dead $lr, implicit $rm, implicit $r3, implicit $r4, implicit $f1, implicit killed $f2, implicit $v2, implicit $v3, implicit $v4, implicit $v5, implicit $v6, implicit $v7, implicit $v8, implicit $v9, implicit $v10, implicit $v11, implicit $v12, implicit $v13, implicit killed $f3, implicit killed $f4, implicit killed $f5, implicit killed $f6, implicit killed $f7, implicit killed $f8, implicit killed $f9, implicit killed $f10, implicit killed $f11, implicit killed $f12, implicit killed $f13, implicit $r2, implicit-def $r1, implicit-def $f1
   ; MIR32-NEXT:   ADJCALLSTACKUP 188, 0, implicit-def dead $r1, implicit $r1
   ; MIR32-NEXT:   BLR implicit $lr, implicit $rm, implicit $f1
   ;
@@ -90,48 +89,46 @@ define double @caller() {
   ; MIR64-NEXT:   renamable $x3 = RLDIC killed renamable $x3, 52, 2
   ; MIR64-NEXT:   STD killed renamable $x3, 200, $x1 :: (store (s64) into unknown-address + 8, align 4)
   ; MIR64-NEXT:   ADJCALLSTACKDOWN 224, 0, implicit-def dead $r1, implicit $r1
-  ; MIR64-NEXT:   renamable $vsl0 = XXLXORz
+  ; MIR64-NEXT:   renamable $v2 = XXLXORz
   ; MIR64-NEXT:   renamable $x3 = LI8 160
-  ; MIR64-NEXT:   STXVW4X renamable $vsl0, $x1, killed renamable $x3 :: (store (s128))
-  ; MIR64-NEXT:   renamable $x3 = LI8 144
-  ; MIR64-NEXT:   STXVW4X renamable $vsl0, $x1, killed renamable $x3 :: (store (s128))
+  ; MIR64-NEXT:   renamable $x5 = LI8 144
+  ; MIR64-NEXT:   STXVW4X renamable $v2, $x1, killed renamable $x3 :: (store (s128))
   ; MIR64-NEXT:   renamable $x3 = LI8 128
-  ; MIR64-NEXT:   STXVW4X killed renamable $vsl0, $x1, killed renamable $x3 :: (store (s128))
-  ; MIR64-NEXT:   renamable $x3 = LI8 512
-  ; MIR64-NEXT:   STD killed renamable $x3, 184, $x1 :: (store (s64) into stack + 184, basealign 16)
-  ; MIR64-NEXT:   renamable $x3 = LI8 80
+  ; MIR64-NEXT:   STXVW4X renamable $v2, $x1, killed renamable $x5 :: (store (s128))
+  ; MIR64-NEXT:   renamable $x5 = LI8 512
+  ; MIR64-NEXT:   STXVW4X renamable $v2, $x1, renamable $x3 :: (store (s128))
+  ; MIR64-NEXT:   STD killed renamable $x5, 184, $x1 :: (store (s64) into stack + 184, basealign 16)
+  ; MIR64-NEXT:   renamable $x5 = LI8 80
   ; MIR64-NEXT:   STD killed renamable $x4, 176, $x1 :: (store (s64) into stack + 176, align 16)
   ; MIR64-NEXT:   renamable $x4 = LDtocCPT %const.0, $x2 :: (load (s64) from got)
   ; MIR64-NEXT:   renamable $vsl0 = LXVD2X $zero8, killed renamable $x4 :: (load (s128) from constant-pool)
-  ; MIR64-NEXT:   STXVD2X killed renamable $vsl0, $x1, killed renamable $x3 :: (store (s128) into stack + 80)
+  ; MIR64-NEXT:   STXVD2X killed renamable $vsl0, $x1, killed renamable $x5 :: (store (s128) into stack + 80)
   ; MIR64-NEXT:   $f1 = XXLXORdpz
   ; MIR64-NEXT:   $f2 = XXLXORdpz
-  ; MIR64-NEXT:   $v2 = XXLXORz
-  ; MIR64-NEXT:   $v3 = XXLXORz
-  ; MIR64-NEXT:   $v4 = XXLXORz
-  ; MIR64-NEXT:   $v5 = XXLXORz
-  ; MIR64-NEXT:   $v6 = XXLXORz
-  ; MIR64-NEXT:   $x3 = LI8 128
-  ; MIR64-NEXT:   $x4 = LI8 256
-  ; MIR64-NEXT:   $v7 = XXLXORz
-  ; MIR64-NEXT:   $v8 = XXLXORz
-  ; MIR64-NEXT:   $v9 = XXLXORz
-  ; MIR64-NEXT:   $v10 = XXLXORz
-  ; MIR64-NEXT:   $v11 = XXLXORz
-  ; MIR64-NEXT:   $v12 = XXLXORz
-  ; MIR64-NEXT:   $v13 = XXLXORz
   ; MIR64-NEXT:   $f3 = XXLXORdpz
   ; MIR64-NEXT:   $f4 = XXLXORdpz
   ; MIR64-NEXT:   $f5 = XXLXORdpz
   ; MIR64-NEXT:   $f6 = XXLXORdpz
   ; MIR64-NEXT:   $f7 = XXLXORdpz
+  ; MIR64-NEXT:   $x4 = LI8 256
+  ; MIR64-NEXT:   $v3 = COPY renamable $v2
+  ; MIR64-NEXT:   $v4 = COPY renamable $v2
+  ; MIR64-NEXT:   $v5 = COPY renamable $v2
+  ; MIR64-NEXT:   $v6 = COPY renamable $v2
+  ; MIR64-NEXT:   $v7 = COPY renamable $v2
+  ; MIR64-NEXT:   $v8 = COPY renamable $v2
+  ; MIR64-NEXT:   $v9 = COPY renamable $v2
+  ; MIR64-NEXT:   $v10 = COPY renamable $v2
+  ; MIR64-NEXT:   $v11 = COPY renamable $v2
+  ; MIR64-NEXT:   $v12 = COPY renamable $v2
+  ; MIR64-NEXT:   $v13 = COPY renamable $v2
   ; MIR64-NEXT:   $f8 = XXLXORdpz
   ; MIR64-NEXT:   $f9 = XXLXORdpz
   ; MIR64-NEXT:   $f10 = XXLXORdpz
   ; MIR64-NEXT:   $f11 = XXLXORdpz
   ; MIR64-NEXT:   $f12 = XXLXORdpz
   ; MIR64-NEXT:   $f13 = XXLXORdpz
-  ; MIR64-NEXT:   BL8_NOP <mcsymbol .callee[PR]>, csr_ppc64_altivec, implicit-def dead $lr8, implicit $rm, implicit $x3, implicit $x4, implicit $f1, implicit killed $f2, implicit killed $v2, implicit killed $v3, implicit killed $v4, implicit killed $v5, implicit killed $v6, implicit killed $v7, implicit killed $v8, implicit killed $v9, implicit killed $v10, implicit killed $v11, implicit killed $v12, implicit killed $v13, implicit killed $f3, implicit killed $f4, implicit killed $f5, implicit killed $f6, implicit killed $f7, implicit killed $f8, implicit killed $f9, implicit killed $f10, implicit killed $f11, implicit killed $f12, implicit killed $f13, implicit $x2, implicit-def $r1, implicit-def $f1
+  ; MIR64-NEXT:   BL8_NOP <mcsymbol .callee[PR]>, csr_ppc64_altivec, implicit-def dead $lr8, implicit $rm, implicit $x3, implicit $x4, implicit $f1, implicit killed $f2, implicit $v2, implicit $v3, implicit $v4, implicit $v5, implicit $v6, implicit $v7, implicit $v8, implicit $v9, implicit $v10, implicit $v11, implicit $v12, implicit $v13, implicit killed $f3, implicit killed $f4, implicit killed $f5, implicit killed $f6, implicit killed $f7, implicit killed $f8, implicit killed $f9, implicit killed $f10, implicit killed $f11, implicit killed $f12, implicit killed $f13, implicit $x2, implicit-def $r1, implicit-def $f1
   ; MIR64-NEXT:   ADJCALLSTACKUP 224, 0, implicit-def dead $r1, implicit $r1
   ; MIR64-NEXT:   BLR8 implicit $lr8, implicit $rm, implicit $f1
   entry:

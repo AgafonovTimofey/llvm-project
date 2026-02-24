@@ -67,10 +67,9 @@ define i32 @decode_sb(ptr %t, i32 %bl, i32 %_msprop1966, i32 %sub.i, i64 %idxpro
 ; CHECK-NEXT:    movq %rcx, 0
 ; CHECK-NEXT:    movq %rdi, %r14
 ; CHECK-NEXT:    movl %r8d, (%rdi)
-; CHECK-NEXT:    xorl %eax, %eax
 ; CHECK-NEXT:    xorl %edi, %edi
-; CHECK-NEXT:    xorl %edx, %edx
-; CHECK-NEXT:    callq *%rax
+; CHECK-NEXT:    movq %rdi, %rdx
+; CHECK-NEXT:    callq *%rdi
 ; CHECK-NEXT:    movb $1, %al
 ; CHECK-NEXT:    testb %al, %al
 ; CHECK-NEXT:    je .LBB0_4

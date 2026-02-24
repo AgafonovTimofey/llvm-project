@@ -116,14 +116,14 @@ define void @za_with_raii(i1 %fail) "aarch64_inout_za" personality ptr @__gxx_pe
 ; CHECK-SDAG-NEXT:    ldp x29, x30, [sp], #32 // 16-byte Folded Reload
 ; CHECK-SDAG-NEXT:    b shared_za_call
 ; CHECK-SDAG-NEXT:  .LBB0_2: // %throw_exception
-; CHECK-SDAG-NEXT:    sub x20, x29, #16
+; CHECK-SDAG-NEXT:    sub x19, x29, #16
 ; CHECK-SDAG-NEXT:    mov w0, #8 // =0x8
-; CHECK-SDAG-NEXT:    msr TPIDR2_EL0, x20
+; CHECK-SDAG-NEXT:    msr TPIDR2_EL0, x19
 ; CHECK-SDAG-NEXT:    bl __cxa_allocate_exception
 ; CHECK-SDAG-NEXT:    mov x8, x0
 ; CHECK-SDAG-NEXT:    smstart za
 ; CHECK-SDAG-NEXT:    mrs x9, TPIDR2_EL0
-; CHECK-SDAG-NEXT:    sub x0, x29, #16
+; CHECK-SDAG-NEXT:    mov x0, x19
 ; CHECK-SDAG-NEXT:    cbnz x9, .LBB0_4
 ; CHECK-SDAG-NEXT:  // %bb.3: // %throw_exception
 ; CHECK-SDAG-NEXT:    bl __arm_tpidr2_restore
@@ -134,14 +134,14 @@ define void @za_with_raii(i1 %fail) "aarch64_inout_za" personality ptr @__gxx_pe
 ; CHECK-SDAG-NEXT:    str x9, [x8]
 ; CHECK-SDAG-NEXT:  .Ltmp0: // EH_LABEL
 ; CHECK-SDAG-NEXT:    adrp x1, :got:typeinfo_for_char_const_ptr
-; CHECK-SDAG-NEXT:    msr TPIDR2_EL0, x20
+; CHECK-SDAG-NEXT:    msr TPIDR2_EL0, x19
 ; CHECK-SDAG-NEXT:    mov x0, x8
 ; CHECK-SDAG-NEXT:    ldr x1, [x1, :got_lo12:typeinfo_for_char_const_ptr]
 ; CHECK-SDAG-NEXT:    mov x2, xzr
 ; CHECK-SDAG-NEXT:    bl __cxa_throw
 ; CHECK-SDAG-NEXT:    smstart za
 ; CHECK-SDAG-NEXT:    mrs x8, TPIDR2_EL0
-; CHECK-SDAG-NEXT:    sub x0, x29, #16
+; CHECK-SDAG-NEXT:    mov x0, x19
 ; CHECK-SDAG-NEXT:    cbnz x8, .LBB0_6
 ; CHECK-SDAG-NEXT:  // %bb.5: // %throw_exception
 ; CHECK-SDAG-NEXT:    bl __arm_tpidr2_restore
@@ -151,7 +151,7 @@ define void @za_with_raii(i1 %fail) "aarch64_inout_za" personality ptr @__gxx_pe
 ; CHECK-SDAG-NEXT:  // %bb.7: // %throw_fail
 ; CHECK-SDAG-NEXT:  .LBB0_8: // %unwind_dtors
 ; CHECK-SDAG-NEXT:  .Ltmp2: // EH_LABEL
-; CHECK-SDAG-NEXT:    mov x19, x0
+; CHECK-SDAG-NEXT:    mov x20, x0
 ; CHECK-SDAG-NEXT:    smstart za
 ; CHECK-SDAG-NEXT:    mrs x8, TPIDR2_EL0
 ; CHECK-SDAG-NEXT:    sub x0, x29, #16
@@ -161,8 +161,8 @@ define void @za_with_raii(i1 %fail) "aarch64_inout_za" personality ptr @__gxx_pe
 ; CHECK-SDAG-NEXT:  .LBB0_10: // %unwind_dtors
 ; CHECK-SDAG-NEXT:    msr TPIDR2_EL0, xzr
 ; CHECK-SDAG-NEXT:    bl shared_za_call
-; CHECK-SDAG-NEXT:    mov x0, x19
-; CHECK-SDAG-NEXT:    msr TPIDR2_EL0, x20
+; CHECK-SDAG-NEXT:    mov x0, x20
+; CHECK-SDAG-NEXT:    msr TPIDR2_EL0, x19
 ; CHECK-SDAG-NEXT:    bl _Unwind_Resume
 ; CHECK-SDAG-NEXT:    smstart za
 ; CHECK-SDAG-NEXT:    mrs x8, TPIDR2_EL0
@@ -294,7 +294,7 @@ define void @try_catch() "aarch64_inout_za" personality ptr @__gxx_personality_v
 ; CHECK-SDAG-NEXT:    bl may_throw
 ; CHECK-SDAG-NEXT:    smstart za
 ; CHECK-SDAG-NEXT:    mrs x8, TPIDR2_EL0
-; CHECK-SDAG-NEXT:    sub x0, x29, #16
+; CHECK-SDAG-NEXT:    mov x0, x19
 ; CHECK-SDAG-NEXT:    cbnz x8, .LBB1_2
 ; CHECK-SDAG-NEXT:  // %bb.1:
 ; CHECK-SDAG-NEXT:    bl __arm_tpidr2_restore
@@ -467,9 +467,9 @@ define void @try_catch_shared_za_callee() "aarch64_new_za" personality ptr @__gx
 ; CHECK-SDAG-NEXT:  .Ltmp8: // EH_LABEL
 ; CHECK-SDAG-NEXT:    mov x1, x0
 ; CHECK-SDAG-NEXT:    smstart za
-; CHECK-SDAG-NEXT:    mrs x8, TPIDR2_EL0
-; CHECK-SDAG-NEXT:    sub x0, x29, #16
 ; CHECK-SDAG-NEXT:    sub x19, x29, #16
+; CHECK-SDAG-NEXT:    mrs x8, TPIDR2_EL0
+; CHECK-SDAG-NEXT:    mov x0, x19
 ; CHECK-SDAG-NEXT:    cbnz x8, .LBB2_6
 ; CHECK-SDAG-NEXT:  // %bb.5: // %catch
 ; CHECK-SDAG-NEXT:    bl __arm_tpidr2_restore
@@ -480,7 +480,7 @@ define void @try_catch_shared_za_callee() "aarch64_new_za" personality ptr @__gx
 ; CHECK-SDAG-NEXT:    bl __cxa_begin_catch
 ; CHECK-SDAG-NEXT:    smstart za
 ; CHECK-SDAG-NEXT:    mrs x8, TPIDR2_EL0
-; CHECK-SDAG-NEXT:    sub x0, x29, #16
+; CHECK-SDAG-NEXT:    mov x0, x19
 ; CHECK-SDAG-NEXT:    cbnz x8, .LBB2_8
 ; CHECK-SDAG-NEXT:  // %bb.7: // %catch
 ; CHECK-SDAG-NEXT:    bl __arm_tpidr2_restore
@@ -491,7 +491,7 @@ define void @try_catch_shared_za_callee() "aarch64_new_za" personality ptr @__gx
 ; CHECK-SDAG-NEXT:    bl __cxa_end_catch
 ; CHECK-SDAG-NEXT:    smstart za
 ; CHECK-SDAG-NEXT:    mrs x8, TPIDR2_EL0
-; CHECK-SDAG-NEXT:    sub x0, x29, #16
+; CHECK-SDAG-NEXT:    mov x0, x19
 ; CHECK-SDAG-NEXT:    cbnz x8, .LBB2_10
 ; CHECK-SDAG-NEXT:  // %bb.9: // %catch
 ; CHECK-SDAG-NEXT:    bl __arm_tpidr2_restore
@@ -917,7 +917,7 @@ define void @try_catch_inout_za_agnostic_za_callee() "aarch64_inout_za" personal
 ; CHECK-SDAG-NEXT:    bl agnostic_za_call
 ; CHECK-SDAG-NEXT:    smstart za
 ; CHECK-SDAG-NEXT:    mrs x8, TPIDR2_EL0
-; CHECK-SDAG-NEXT:    sub x0, x29, #16
+; CHECK-SDAG-NEXT:    mov x0, x19
 ; CHECK-SDAG-NEXT:    cbnz x8, .LBB6_2
 ; CHECK-SDAG-NEXT:  // %bb.1: // %entry
 ; CHECK-SDAG-NEXT:    bl __arm_tpidr2_restore
@@ -1149,15 +1149,15 @@ define void @try_catch_shared_za_callee_zt0_saved(ptr %callee) "aarch64_inout_za
 ; CHECK-SDAG-NEXT:    mov sp, x9
 ; CHECK-SDAG-NEXT:    stp x9, x8, [x29, #-16]
 ; CHECK-SDAG-NEXT:  .Ltmp24: // EH_LABEL
-; CHECK-SDAG-NEXT:    sub x8, x29, #16
-; CHECK-SDAG-NEXT:    sub x20, x29, #80
-; CHECK-SDAG-NEXT:    msr TPIDR2_EL0, x8
-; CHECK-SDAG-NEXT:    str zt0, [x20]
+; CHECK-SDAG-NEXT:    sub x20, x29, #16
+; CHECK-SDAG-NEXT:    sub x21, x29, #80
+; CHECK-SDAG-NEXT:    msr TPIDR2_EL0, x20
+; CHECK-SDAG-NEXT:    str zt0, [x21]
 ; CHECK-SDAG-NEXT:    bl may_throw
 ; CHECK-SDAG-NEXT:    smstart za
-; CHECK-SDAG-NEXT:    ldr zt0, [x20]
+; CHECK-SDAG-NEXT:    ldr zt0, [x21]
 ; CHECK-SDAG-NEXT:    mrs x8, TPIDR2_EL0
-; CHECK-SDAG-NEXT:    sub x0, x29, #16
+; CHECK-SDAG-NEXT:    mov x0, x20
 ; CHECK-SDAG-NEXT:    cbnz x8, .LBB8_2
 ; CHECK-SDAG-NEXT:  // %bb.1:
 ; CHECK-SDAG-NEXT:    bl __arm_tpidr2_restore
@@ -1172,11 +1172,10 @@ define void @try_catch_shared_za_callee_zt0_saved(ptr %callee) "aarch64_inout_za
 ; CHECK-SDAG-NEXT:    ret
 ; CHECK-SDAG-NEXT:  .LBB8_4: // %unwind_dtors
 ; CHECK-SDAG-NEXT:  .Ltmp26: // EH_LABEL
-; CHECK-SDAG-NEXT:    sub x21, x29, #80
-; CHECK-SDAG-NEXT:    sub x22, x29, #16
-; CHECK-SDAG-NEXT:    mov x20, x0
+; CHECK-SDAG-NEXT:    sub x22, x29, #80
+; CHECK-SDAG-NEXT:    mov x21, x0
 ; CHECK-SDAG-NEXT:    smstart za
-; CHECK-SDAG-NEXT:    ldr zt0, [x21]
+; CHECK-SDAG-NEXT:    ldr zt0, [x22]
 ; CHECK-SDAG-NEXT:    mrs x8, TPIDR2_EL0
 ; CHECK-SDAG-NEXT:    sub x0, x29, #16
 ; CHECK-SDAG-NEXT:    cbnz x8, .LBB8_6
@@ -1184,15 +1183,15 @@ define void @try_catch_shared_za_callee_zt0_saved(ptr %callee) "aarch64_inout_za
 ; CHECK-SDAG-NEXT:    bl __arm_tpidr2_restore
 ; CHECK-SDAG-NEXT:  .LBB8_6: // %unwind_dtors
 ; CHECK-SDAG-NEXT:    msr TPIDR2_EL0, xzr
-; CHECK-SDAG-NEXT:    str zt0, [x21]
+; CHECK-SDAG-NEXT:    str zt0, [x22]
 ; CHECK-SDAG-NEXT:    blr x19
-; CHECK-SDAG-NEXT:    ldr zt0, [x21]
-; CHECK-SDAG-NEXT:    mov x0, x20
-; CHECK-SDAG-NEXT:    msr TPIDR2_EL0, x22
-; CHECK-SDAG-NEXT:    str zt0, [x21]
+; CHECK-SDAG-NEXT:    ldr zt0, [x22]
+; CHECK-SDAG-NEXT:    mov x0, x21
+; CHECK-SDAG-NEXT:    msr TPIDR2_EL0, x20
+; CHECK-SDAG-NEXT:    str zt0, [x22]
 ; CHECK-SDAG-NEXT:    bl _Unwind_Resume
 ; CHECK-SDAG-NEXT:    smstart za
-; CHECK-SDAG-NEXT:    ldr zt0, [x21]
+; CHECK-SDAG-NEXT:    ldr zt0, [x22]
 ; CHECK-SDAG-NEXT:    mrs x8, TPIDR2_EL0
 ; CHECK-SDAG-NEXT:    sub x0, x29, #16
 ; CHECK-SDAG-NEXT:    cbnz x8, .LBB8_8

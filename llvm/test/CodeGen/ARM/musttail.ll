@@ -169,30 +169,32 @@ entry:
 define void @large_caller_new_value(%twenty_bytes* byval(%twenty_bytes) align 4 %a) {
 ; CHECK-LABEL: large_caller_new_value:
 ; CHECK:       @ %bb.0: @ %entry
-; CHECK-NEXT:    .pad #36
-; CHECK-NEXT:    sub sp, sp, #36
-; CHECK-NEXT:    add r12, sp, #20
+; CHECK-NEXT:    .pad #16
+; CHECK-NEXT:    sub sp, sp, #16
+; CHECK-NEXT:    .save {r4, lr}
+; CHECK-NEXT:    push {r4, lr}
+; CHECK-NEXT:    .pad #20
+; CHECK-NEXT:    sub sp, sp, #20
+; CHECK-NEXT:    add r12, sp, #28
+; CHECK-NEXT:    add lr, sp, #44
 ; CHECK-NEXT:    stm r12, {r0, r1, r2, r3}
+; CHECK-NEXT:    mov r12, sp
 ; CHECK-NEXT:    mov r0, #4
-; CHECK-NEXT:    add r1, sp, #36
 ; CHECK-NEXT:    str r0, [sp, #16]
-; CHECK-NEXT:    mov r0, #3
-; CHECK-NEXT:    str r0, [sp, #12]
-; CHECK-NEXT:    mov r0, #2
-; CHECK-NEXT:    str r0, [sp, #8]
-; CHECK-NEXT:    mov r0, #1
-; CHECK-NEXT:    str r0, [sp, #4]
-; CHECK-NEXT:    mov r0, #0
-; CHECK-NEXT:    str r0, [sp]
-; CHECK-NEXT:    mov r0, sp
-; CHECK-NEXT:    add r0, r0, #16
 ; CHECK-NEXT:    mov r3, #3
-; CHECK-NEXT:    ldr r2, [r0], #4
-; CHECK-NEXT:    str r2, [r1], #4
-; CHECK-NEXT:    mov r0, #0
-; CHECK-NEXT:    mov r1, #1
 ; CHECK-NEXT:    mov r2, #2
-; CHECK-NEXT:    add sp, sp, #36
+; CHECK-NEXT:    mov r1, #1
+; CHECK-NEXT:    mov r0, #0
+; CHECK-NEXT:    add r12, r12, #16
+; CHECK-NEXT:    str r3, [sp, #12]
+; CHECK-NEXT:    str r2, [sp, #8]
+; CHECK-NEXT:    str r1, [sp, #4]
+; CHECK-NEXT:    str r0, [sp]
+; CHECK-NEXT:    ldr r4, [r12], #4
+; CHECK-NEXT:    str r4, [lr], #4
+; CHECK-NEXT:    add sp, sp, #20
+; CHECK-NEXT:    pop {r4, lr}
+; CHECK-NEXT:    add sp, sp, #16
 ; CHECK-NEXT:    b large_callee
 entry:
   %y = alloca %twenty_bytes, align 4

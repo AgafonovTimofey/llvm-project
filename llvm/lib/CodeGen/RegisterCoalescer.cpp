@@ -1382,6 +1382,16 @@ bool RegisterCoalescer::reMaterializeDef(const CoalescerPair &CP,
     }
   }
 
+  // Avoid rematerializing into a physreg if the vreg has non-physreg-copy uses.
+  // Remat won't eliminate the vreg so let the allocator assign it.
+  if (DstReg.isPhysical() && !MRI->hasOneNonDBGUse(SrcReg) &&
+      DefMI->getParent() == CopyMI->getParent()) {
+    for (const MachineInstr &UseMI : MRI->use_nodbg_instructions(SrcReg)) {
+      if (!UseMI.isCopyLike())
+        return false;
+    }
+  }
+
   if (!VirtRegAuxInfo::allUsesAvailableAt(DefMI, CopyIdx, *LIS, *MRI, *TII))
     return false;
 

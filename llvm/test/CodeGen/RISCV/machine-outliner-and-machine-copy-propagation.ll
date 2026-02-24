@@ -37,7 +37,7 @@ entry:
 
 define signext i32 @main() nounwind {
 entry:
-  %call = tail call signext i32 @nge(i32 signext -2147483648, i32 signext 2147483647)
+  %call = tail call signext i32 @nge(i32 signext -2147483647, i32 signext 2147483647)
   %cmp.not = icmp eq i32 %call, 0
   br i1 %cmp.not, label %if.end, label %if.then
 
@@ -46,7 +46,7 @@ if.then:
   unreachable
 
 if.end:
-  %call1 = tail call signext i32 @nge(i32 signext 2147483647, i32 signext -2147483648)
+  %call1 = tail call signext i32 @nge(i32 signext 2147483647, i32 signext -2147483647)
   %cmp2.not = icmp eq i32 %call1, -1
   br i1 %cmp2.not, label %if.end4, label %if.then3
 
@@ -55,7 +55,7 @@ if.then3:
   unreachable
 
 if.end4:
-  %call5 = tail call signext i32 @ngt(i32 signext -2147483648, i32 signext 2147483647)
+  %call5 = tail call signext i32 @ngt(i32 signext -2147483647, i32 signext 2147483647)
   %cmp6.not = icmp eq i32 %call5, 0
   br i1 %cmp6.not, label %if.end8, label %if.then7
 
@@ -64,7 +64,7 @@ if.then7:
   unreachable
 
 if.end8:
-  %call9 = tail call signext i32 @ngt(i32 signext 2147483647, i32 signext -2147483648)
+  %call9 = tail call signext i32 @ngt(i32 signext 2147483647, i32 signext -2147483647)
   %cmp10.not = icmp eq i32 %call9, -1
   br i1 %cmp10.not, label %if.end12, label %if.then11
 
@@ -73,7 +73,7 @@ if.then11:
   unreachable
 
 if.end12:
-  %call13 = tail call signext i32 @nle(i32 signext -2147483648, i32 signext 2147483647)
+  %call13 = tail call signext i32 @nle(i32 signext -2147483647, i32 signext 2147483647)
   %cmp14.not = icmp eq i32 %call13, -1
   br i1 %cmp14.not, label %if.end16, label %if.then15
 
@@ -82,7 +82,7 @@ if.then15:
   unreachable
 
 if.end16:
-  %call17 = tail call signext i32 @nle(i32 signext 2147483647, i32 signext -2147483648)
+  %call17 = tail call signext i32 @nle(i32 signext 2147483647, i32 signext -2147483647)
   %cmp18.not = icmp eq i32 %call17, 0
   br i1 %cmp18.not, label %if.end20, label %if.then19
 
@@ -91,7 +91,7 @@ if.then19:
   unreachable
 
 if.end20:
-  %call21 = tail call signext i32 @nlt(i32 signext -2147483648, i32 signext 2147483647)
+  %call21 = tail call signext i32 @nlt(i32 signext -2147483647, i32 signext 2147483647)
   %cmp22.not = icmp eq i32 %call21, -1
   br i1 %cmp22.not, label %if.end24, label %if.then23
 
@@ -100,7 +100,7 @@ if.then23:
   unreachable
 
 if.end24:
-  %call25 = tail call signext i32 @nlt(i32 signext 2147483647, i32 signext -2147483648)
+  %call25 = tail call signext i32 @nlt(i32 signext 2147483647, i32 signext -2147483647)
   %cmp26.not = icmp eq i32 %call25, 0
   br i1 %cmp26.not, label %if.end28, label %if.then27
 
@@ -146,12 +146,13 @@ declare void @exit(i32 signext) noreturn
 ; RV64I-NEXT:    sd ra, 24(sp) # 8-byte Folded Spill
 ; RV64I-NEXT:    sd s0, 16(sp) # 8-byte Folded Spill
 ; RV64I-NEXT:    sd s1, 8(sp) # 8-byte Folded Spill
+; RV64I-NEXT:    sd s2, 0(sp) # 8-byte Folded Spill
 ; RV64I-NEXT:    call t0, OUTLINED_FUNCTION_0
 ; RV64I-NEXT:    call nge
 ; RV64I-NEXT:    bnez a0, .LBB4_9
 ; RV64I-NEXT:  # %bb.1: # %if.end
-; RV64I-NEXT:    lui a1, 524288
-; RV64I-NEXT:    mv a0, s0
+; RV64I-NEXT:    mv a0, s1
+; RV64I-NEXT:    mv a1, s0
 ; RV64I-NEXT:    call nge
 ; RV64I-NEXT:    li a1, -1
 ; RV64I-NEXT:    bne a0, a1, .LBB4_9
@@ -160,18 +161,18 @@ declare void @exit(i32 signext) noreturn
 ; RV64I-NEXT:    call ngt
 ; RV64I-NEXT:    bnez a0, .LBB4_9
 ; RV64I-NEXT:  # %bb.3: # %if.end8
-; RV64I-NEXT:    lui a1, 524288
-; RV64I-NEXT:    mv a0, s0
+; RV64I-NEXT:    mv a0, s1
+; RV64I-NEXT:    mv a1, s0
 ; RV64I-NEXT:    call ngt
-; RV64I-NEXT:    li s1, -1
-; RV64I-NEXT:    bne a0, s1, .LBB4_9
+; RV64I-NEXT:    li s2, -1
+; RV64I-NEXT:    bne a0, s2, .LBB4_9
 ; RV64I-NEXT:  # %bb.4: # %if.end12
 ; RV64I-NEXT:    call t0, OUTLINED_FUNCTION_0
 ; RV64I-NEXT:    call nle
-; RV64I-NEXT:    bne a0, s1, .LBB4_9
+; RV64I-NEXT:    bne a0, s2, .LBB4_9
 ; RV64I-NEXT:  # %bb.5: # %if.end16
-; RV64I-NEXT:    lui a1, 524288
-; RV64I-NEXT:    mv a0, s0
+; RV64I-NEXT:    mv a0, s1
+; RV64I-NEXT:    mv a1, s0
 ; RV64I-NEXT:    call nle
 ; RV64I-NEXT:    bnez a0, .LBB4_9
 ; RV64I-NEXT:  # %bb.6: # %if.end20
@@ -180,8 +181,8 @@ declare void @exit(i32 signext) noreturn
 ; RV64I-NEXT:    li a1, -1
 ; RV64I-NEXT:    bne a0, a1, .LBB4_9
 ; RV64I-NEXT:  # %bb.7: # %if.end24
-; RV64I-NEXT:    lui a1, 524288
-; RV64I-NEXT:    mv a0, s0
+; RV64I-NEXT:    mv a0, s1
+; RV64I-NEXT:    mv a1, s0
 ; RV64I-NEXT:    call nlt
 ; RV64I-NEXT:    bnez a0, .LBB4_9
 ; RV64I-NEXT:  # %bb.8: # %if.end28
@@ -191,8 +192,9 @@ declare void @exit(i32 signext) noreturn
 ;
 ; RV64I-LABEL: OUTLINED_FUNCTION_0:
 ; RV64I:       # %bb.0:
-; RV64I-NEXT:    lui s0, 524288
-; RV64I-NEXT:    addiw s0, s0, -1
-; RV64I-NEXT:    lui a0, 524288
-; RV64I-NEXT:    mv a1, s0
+; RV64I-NEXT:    lui s1, 524288
+; RV64I-NEXT:    addi s0, s1, 1
+; RV64I-NEXT:    addiw s1, s1, -1
+; RV64I-NEXT:    mv a0, s0
+; RV64I-NEXT:    mv a1, s1
 ; RV64I-NEXT:    jr t0

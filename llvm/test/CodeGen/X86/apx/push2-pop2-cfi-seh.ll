@@ -33,9 +33,8 @@ define i32 @csr6_alloc16(ptr %argv) {
 ; LIN-REF-NEXT:    .cfi_offset %rbp, -16
 ; LIN-REF-NEXT:    #APP
 ; LIN-REF-NEXT:    #NO_APP
-; LIN-REF-NEXT:    xorl %ecx, %ecx
 ; LIN-REF-NEXT:    xorl %eax, %eax
-; LIN-REF-NEXT:    callq *%rcx
+; LIN-REF-NEXT:    callq *%rax
 ; LIN-REF-NEXT:    addq $24, %rsp
 ; LIN-REF-NEXT:    .cfi_def_cfa_offset 56
 ; LIN-REF-NEXT:    popq %rbx
@@ -72,9 +71,8 @@ define i32 @csr6_alloc16(ptr %argv) {
 ; LIN-NEXT:    .cfi_offset %rbp, -24
 ; LIN-NEXT:    #APP
 ; LIN-NEXT:    #NO_APP
-; LIN-NEXT:    xorl %ecx, %ecx
 ; LIN-NEXT:    xorl %eax, %eax
-; LIN-NEXT:    callq *%rcx
+; LIN-NEXT:    callq *%rax
 ; LIN-NEXT:    addq $32, %rsp
 ; LIN-NEXT:    .cfi_def_cfa_offset 64
 ; LIN-NEXT:    pop2 %r12, %rbx
@@ -107,9 +105,8 @@ define i32 @csr6_alloc16(ptr %argv) {
 ; LIN-PPX-NEXT:    .cfi_offset %rbp, -24
 ; LIN-PPX-NEXT:    #APP
 ; LIN-PPX-NEXT:    #NO_APP
-; LIN-PPX-NEXT:    xorl %ecx, %ecx
 ; LIN-PPX-NEXT:    xorl %eax, %eax
-; LIN-PPX-NEXT:    callq *%rcx
+; LIN-PPX-NEXT:    callq *%rax
 ; LIN-PPX-NEXT:    addq $32, %rsp
 ; LIN-PPX-NEXT:    .cfi_def_cfa_offset 64
 ; LIN-PPX-NEXT:    pop2p %r12, %rbx

@@ -1442,13 +1442,12 @@ define void @call_test_i1_stack() {
 ; ASM32PWR4:       # %bb.0: # %entry
 ; ASM32PWR4-NEXT:    mflr 0
 ; ASM32PWR4-NEXT:    stwu 1, -64(1)
-; ASM32PWR4-NEXT:    li 11, 1
 ; ASM32PWR4-NEXT:    li 3, 1
-; ASM32PWR4-NEXT:    stw 0, 72(1)
 ; ASM32PWR4-NEXT:    li 4, 2
+; ASM32PWR4-NEXT:    stw 0, 72(1)
 ; ASM32PWR4-NEXT:    li 5, 3
-; ASM32PWR4-NEXT:    stw 11, 56(1)
 ; ASM32PWR4-NEXT:    li 6, 4
+; ASM32PWR4-NEXT:    stw 3, 56(1)
 ; ASM32PWR4-NEXT:    li 7, 5
 ; ASM32PWR4-NEXT:    li 8, 6
 ; ASM32PWR4-NEXT:    li 9, 7
@@ -1464,13 +1463,12 @@ define void @call_test_i1_stack() {
 ; ASM64PWR4:       # %bb.0: # %entry
 ; ASM64PWR4-NEXT:    mflr 0
 ; ASM64PWR4-NEXT:    stdu 1, -128(1)
-; ASM64PWR4-NEXT:    li 11, 1
 ; ASM64PWR4-NEXT:    li 3, 1
-; ASM64PWR4-NEXT:    std 0, 144(1)
 ; ASM64PWR4-NEXT:    li 4, 2
+; ASM64PWR4-NEXT:    std 0, 144(1)
 ; ASM64PWR4-NEXT:    li 5, 3
-; ASM64PWR4-NEXT:    std 11, 112(1)
 ; ASM64PWR4-NEXT:    li 6, 4
+; ASM64PWR4-NEXT:    std 3, 112(1)
 ; ASM64PWR4-NEXT:    li 7, 5
 ; ASM64PWR4-NEXT:    li 8, 6
 ; ASM64PWR4-NEXT:    li 9, 7

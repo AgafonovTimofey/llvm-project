@@ -63,8 +63,8 @@ define void @testcallframe(i32 %a) {
 ; CHECK-NEXT:    cmp r0, #0
 ; CHECK-NEXT:    mov r1, #0
 ; CHECK-NEXT:    rsbmi r0, r0, #0
-; CHECK-NEXT:    mov r2, #0
-; CHECK-NEXT:    mov r3, #0
+; CHECK-NEXT:    mov r2, r1
+; CHECK-NEXT:    mov r3, r1
 ; CHECK-NEXT:    str r1, [sp]
 ; CHECK-NEXT:    bl callee
 ; CHECK-NEXT:    add sp, sp, #8

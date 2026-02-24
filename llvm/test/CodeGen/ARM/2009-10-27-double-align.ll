@@ -9,7 +9,7 @@ entry:
 ;NOREGALLOC: [sp, #12]
 ;NOREGALLOC: [sp]
 ;REGALLOC: [sp]
-;REGALLOC: [sp, #12]
+;REGALLOC: [sp, #8]
         tail call  void (ptr, ...) @f(ptr @.str, i32 1, double 2.000000e+00, i32 3, double 4.000000e+00)
         ret void
 }

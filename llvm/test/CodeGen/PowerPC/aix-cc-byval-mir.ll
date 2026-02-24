@@ -555,11 +555,10 @@ define i32 @call_test_byval_homogeneous_float_struct() {
   ; 32BIT-NEXT:   renamable $r3 = LI 0
   ; 32BIT-NEXT:   STW renamable $r3, 8, %stack.0.s :: (store (s32) into %ir.s + 8, align 8)
   ; 32BIT-NEXT:   STW renamable $r3, 4, %stack.0.s :: (store (s32) into %ir.s + 4, basealign 8)
-  ; 32BIT-NEXT:   STW killed renamable $r3, 0, %stack.0.s :: (store (s32) into %ir.s, align 8)
+  ; 32BIT-NEXT:   STW renamable $r3, 0, %stack.0.s :: (store (s32) into %ir.s, align 8)
   ; 32BIT-NEXT:   ADJCALLSTACKDOWN 56, 0, implicit-def dead $r1, implicit $r1
   ; 32BIT-NEXT:   renamable $r5 = LWZ 8, %stack.0.s :: (load (s32) from %stack.0.s + 8, align 8)
   ; 32BIT-NEXT:   renamable $r4 = LWZ 4, %stack.0.s :: (load (s32) from %stack.0.s + 4)
-  ; 32BIT-NEXT:   $r3 = LI 0
   ; 32BIT-NEXT:   BL_NOP <mcsymbol .test_byval_homogeneous_float_struct[PR]>, csr_aix32, implicit-def dead $lr, implicit $rm, implicit $r3, implicit $r4, implicit $r5, implicit $r2, implicit-def $r1, implicit-def $r3
   ; 32BIT-NEXT:   ADJCALLSTACKUP 56, 0, implicit-def dead $r1, implicit $r1
   ; 32BIT-NEXT:   BLR implicit $lr, implicit $rm, implicit $r3
@@ -568,11 +567,10 @@ define i32 @call_test_byval_homogeneous_float_struct() {
   ; 64BIT: bb.0.entry:
   ; 64BIT-NEXT:   renamable $x3 = LI8 0
   ; 64BIT-NEXT:   STW8 renamable $x3, 8, %stack.0.s :: (store (s32) into %ir.s + 8, align 8)
-  ; 64BIT-NEXT:   STD killed renamable $x3, 0, %stack.0.s :: (store (s64) into %ir.s)
+  ; 64BIT-NEXT:   STD renamable $x3, 0, %stack.0.s :: (store (s64) into %ir.s)
   ; 64BIT-NEXT:   ADJCALLSTACKDOWN 112, 0, implicit-def dead $r1, implicit $r1
-  ; 64BIT-NEXT:   renamable $x3 = LWZ8 8, %stack.0.s :: (load (s32) from %stack.0.s + 8, align 8)
-  ; 64BIT-NEXT:   renamable $x4 = RLDICR killed renamable $x3, 32, 31
-  ; 64BIT-NEXT:   $x3 = LI8 0
+  ; 64BIT-NEXT:   renamable $x4 = LWZ8 8, %stack.0.s :: (load (s32) from %stack.0.s + 8, align 8)
+  ; 64BIT-NEXT:   renamable $x4 = RLDICR killed renamable $x4, 32, 31
   ; 64BIT-NEXT:   BL8_NOP <mcsymbol .test_byval_homogeneous_float_struct[PR]>, csr_ppc64, implicit-def dead $lr8, implicit $rm, implicit $x3, implicit $x4, implicit $x2, implicit-def $r1, implicit-def $x3
   ; 64BIT-NEXT:   ADJCALLSTACKUP 112, 0, implicit-def dead $r1, implicit $r1
   ; 64BIT-NEXT:   BLR8 implicit $lr8, implicit $rm, implicit $x3

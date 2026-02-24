@@ -9,8 +9,8 @@ define void @float_va_fn(float %a, i32 %b, ...) nounwind {
 ; DAGISEL-NEXT:    str x30, [sp, #-64]! // 8-byte Folded Spill
 ; DAGISEL-NEXT:    fmov s0, w0
 ; DAGISEL-NEXT:    add x8, sp, #16
-; DAGISEL-NEXT:    add x0, sp, #16
 ; DAGISEL-NEXT:    stp x2, x3, [sp, #16]
+; DAGISEL-NEXT:    mov x0, x8
 ; DAGISEL-NEXT:    stp x4, x5, [sp, #32]
 ; DAGISEL-NEXT:    stp x6, x7, [sp, #48]
 ; DAGISEL-NEXT:    str x8, [sp, #8]
@@ -59,8 +59,8 @@ define void @double_va_fn(double %a, i32 %b, ...) nounwind {
 ; DAGISEL-NEXT:    str x30, [sp, #-64]! // 8-byte Folded Spill
 ; DAGISEL-NEXT:    fmov d0, x0
 ; DAGISEL-NEXT:    add x8, sp, #16
-; DAGISEL-NEXT:    add x0, sp, #16
 ; DAGISEL-NEXT:    stp x2, x3, [sp, #16]
+; DAGISEL-NEXT:    mov x0, x8
 ; DAGISEL-NEXT:    stp x4, x5, [sp, #32]
 ; DAGISEL-NEXT:    stp x6, x7, [sp, #48]
 ; DAGISEL-NEXT:    str x8, [sp, #8]

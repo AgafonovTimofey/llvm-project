@@ -58,8 +58,10 @@
 
 ; Check that the stack address passed to init2 is off the frame pointer, and
 ; that it matches the address of B in the parent function.
-; CHECK:       sub     x0, x29, [[B_OFFSET]]
-; CHECK:       bl      "?init2@@YAXPEAH@Z"
+; x21 is used after the call as well.
+; CHECK:       sub     x21, x29, [[B_OFFSET]]
+; CHECK-NEXT:  mov     x0, x21
+; CHECK-NEXT:  bl      "?init2@@YAXPEAH@Z"
 
 ; Check that are storing x back to the same location off the frame pointer as in
 ; the parent function.

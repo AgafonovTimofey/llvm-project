@@ -681,32 +681,33 @@ define void @test_srem_vec(ptr %X) nounwind {
 ; RV32MV-NEXT:    sw s2, 48(sp) # 4-byte Folded Spill
 ; RV32MV-NEXT:    sw s3, 44(sp) # 4-byte Folded Spill
 ; RV32MV-NEXT:    sw s4, 40(sp) # 4-byte Folded Spill
+; RV32MV-NEXT:    sw s5, 36(sp) # 4-byte Folded Spill
 ; RV32MV-NEXT:    csrr a1, vlenb
 ; RV32MV-NEXT:    slli a1, a1, 1
 ; RV32MV-NEXT:    sub sp, sp, a1
 ; RV32MV-NEXT:    mv s0, a0
-; RV32MV-NEXT:    lw a1, 8(a0)
-; RV32MV-NEXT:    lbu a2, 12(a0)
-; RV32MV-NEXT:    lw a3, 4(a0)
 ; RV32MV-NEXT:    lw a0, 0(a0)
+; RV32MV-NEXT:    lw a1, 4(s0)
+; RV32MV-NEXT:    lw a2, 8(s0)
+; RV32MV-NEXT:    lbu a3, 12(s0)
 ; RV32MV-NEXT:    li a4, 1
-; RV32MV-NEXT:    slli a5, a2, 30
-; RV32MV-NEXT:    srli s1, a1, 2
-; RV32MV-NEXT:    slli a6, a1, 31
-; RV32MV-NEXT:    or s1, s1, a5
-; RV32MV-NEXT:    srli a5, a3, 1
-; RV32MV-NEXT:    or s2, a5, a6
-; RV32MV-NEXT:    li a5, -1
-; RV32MV-NEXT:    srli a2, a2, 2
-; RV32MV-NEXT:    srli a1, a1, 1
+; RV32MV-NEXT:    li s1, -1
+; RV32MV-NEXT:    sw s1, 8(sp)
+; RV32MV-NEXT:    sw a4, 12(sp)
+; RV32MV-NEXT:    slli a4, a3, 30
+; RV32MV-NEXT:    srli a5, a2, 2
+; RV32MV-NEXT:    slli a6, a2, 31
+; RV32MV-NEXT:    or s2, a5, a4
+; RV32MV-NEXT:    srli a4, a1, 1
+; RV32MV-NEXT:    or s3, a4, a6
+; RV32MV-NEXT:    srli a3, a3, 2
+; RV32MV-NEXT:    srli a2, a2, 1
+; RV32MV-NEXT:    slli a1, a1, 31
 ; RV32MV-NEXT:    slli a3, a3, 31
 ; RV32MV-NEXT:    slli a2, a2, 31
-; RV32MV-NEXT:    slli a6, a1, 31
-; RV32MV-NEXT:    srai a1, a3, 31
-; RV32MV-NEXT:    srai s3, a2, 31
-; RV32MV-NEXT:    srai s4, a6, 31
-; RV32MV-NEXT:    sw a5, 16(sp)
-; RV32MV-NEXT:    sw a4, 20(sp)
+; RV32MV-NEXT:    srai s4, a3, 31
+; RV32MV-NEXT:    srai s5, a2, 31
+; RV32MV-NEXT:    srai a1, a1, 31
 ; RV32MV-NEXT:    li a2, 6
 ; RV32MV-NEXT:    li a3, 0
 ; RV32MV-NEXT:    call __moddi3
@@ -716,8 +717,8 @@ define void @test_srem_vec(ptr %X) nounwind {
 ; RV32MV-NEXT:    addi a0, sp, 32
 ; RV32MV-NEXT:    vs2r.v v8, (a0) # vscale x 16-byte Folded Spill
 ; RV32MV-NEXT:    li a2, 7
-; RV32MV-NEXT:    mv a0, s2
-; RV32MV-NEXT:    mv a1, s4
+; RV32MV-NEXT:    mv a0, s3
+; RV32MV-NEXT:    mv a1, s5
 ; RV32MV-NEXT:    li a3, 0
 ; RV32MV-NEXT:    call __moddi3
 ; RV32MV-NEXT:    addi a2, sp, 32
@@ -728,15 +729,15 @@ define void @test_srem_vec(ptr %X) nounwind {
 ; RV32MV-NEXT:    addi a0, sp, 32
 ; RV32MV-NEXT:    vs2r.v v8, (a0) # vscale x 16-byte Folded Spill
 ; RV32MV-NEXT:    li a2, -5
-; RV32MV-NEXT:    li a3, -1
-; RV32MV-NEXT:    mv a0, s1
-; RV32MV-NEXT:    mv a1, s3
+; RV32MV-NEXT:    mv a0, s2
+; RV32MV-NEXT:    mv a1, s4
+; RV32MV-NEXT:    mv a3, s1
 ; RV32MV-NEXT:    call __moddi3
 ; RV32MV-NEXT:    addi a2, sp, 32
 ; RV32MV-NEXT:    vl2r.v v8, (a2) # vscale x 16-byte Folded Reload
 ; RV32MV-NEXT:    vsetivli zero, 8, e32, m2, ta, ma
 ; RV32MV-NEXT:    vslide1down.vx v8, v8, a0
-; RV32MV-NEXT:    addi a0, sp, 16
+; RV32MV-NEXT:    addi a0, sp, 8
 ; RV32MV-NEXT:    vsetivli zero, 4, e64, m2, ta, ma
 ; RV32MV-NEXT:    vlse64.v v10, (a0), zero
 ; RV32MV-NEXT:    vid.v v12
@@ -787,6 +788,7 @@ define void @test_srem_vec(ptr %X) nounwind {
 ; RV32MV-NEXT:    lw s2, 48(sp) # 4-byte Folded Reload
 ; RV32MV-NEXT:    lw s3, 44(sp) # 4-byte Folded Reload
 ; RV32MV-NEXT:    lw s4, 40(sp) # 4-byte Folded Reload
+; RV32MV-NEXT:    lw s5, 36(sp) # 4-byte Folded Reload
 ; RV32MV-NEXT:    addi sp, sp, 64
 ; RV32MV-NEXT:    ret
 ;

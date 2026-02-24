@@ -128,19 +128,19 @@ define dso_local void @check_i128_align() {
                                    i32 42, i128 %val)
 ; CHECK: add x[[VAR128:[0-9]+]], {{x[0-9]+}}, :lo12:var128
 ; CHECK: ldp [[I128LO:x[0-9]+]], [[I128HI:x[0-9]+]], [x[[VAR128]]]
-; CHECK: stp [[I128HI]], {{x[0-9]+}}, [sp, #24]
+; CHECK: mov w19, #42
+; CHECK: stp [[I128LO]], [[I128HI]], [sp, #16]
 
 ; CHECK-NONEON: add x[[VAR128:[0-9]+]], {{x[0-9]+}}, :lo12:var128
 ; CHECK-NONEON: ldp [[I128LO:x[0-9]+]], [[I128HI:x[0-9]+]], [x[[VAR128]]]
-; CHECK-NONEON: stp [[I128HI]], {{x[0-9]+}}, [sp, #24]
+; CHECK-NONEON: stp [[I128LO]], [[I128HI]], [sp, #16]
 ; CHECK: bl check_i128_stackalign
 
   call void @check_i128_regalign(i32 0, i128 42)
 ; CHECK-NOT: mov x1
-; CHECK-LE: mov x2, #{{0x2a|42}}
 ; CHECK-LE: mov x3, xzr
 ; CHECK-BE: mov x2, xzr
-; CHECK-BE: mov {{x|w}}3, #{{0x2a|42}}
+; CHECK-BE: mov {{x|w}}3, {{x|w}}19
 ; CHECK: bl check_i128_regalign
 
   ret void

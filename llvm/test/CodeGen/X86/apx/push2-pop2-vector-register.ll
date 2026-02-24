@@ -12,9 +12,9 @@ define void @widget(float %arg) nounwind {
 ; CHECK-NEXT:    movaps %xmm6, {{[-0-9]+}}(%r{{[sb]}}p) # 16-byte Spill
 ; CHECK-NEXT:    movaps %xmm0, %xmm6
 ; CHECK-NEXT:    xorl %esi, %esi
-; CHECK-NEXT:    xorl %ecx, %ecx
+; CHECK-NEXT:    movq %rsi, %rcx
 ; CHECK-NEXT:    callq *%rsi
-; CHECK-NEXT:    xorl %ecx, %ecx
+; CHECK-NEXT:    movq %rsi, %rcx
 ; CHECK-NEXT:    xorl %edx, %edx
 ; CHECK-NEXT:    xorl %r8d, %r8d
 ; CHECK-NEXT:    callq *%rsi
@@ -36,9 +36,9 @@ define void @widget(float %arg) nounwind {
 ; FRAME-NEXT:    movaps %xmm6, {{[-0-9]+}}(%r{{[sb]}}p) # 16-byte Spill
 ; FRAME-NEXT:    movaps %xmm0, %xmm6
 ; FRAME-NEXT:    xorl %esi, %esi
-; FRAME-NEXT:    xorl %ecx, %ecx
+; FRAME-NEXT:    movq %rsi, %rcx
 ; FRAME-NEXT:    callq *%rsi
-; FRAME-NEXT:    xorl %ecx, %ecx
+; FRAME-NEXT:    movq %rsi, %rcx
 ; FRAME-NEXT:    xorl %edx, %edx
 ; FRAME-NEXT:    xorl %r8d, %r8d
 ; FRAME-NEXT:    callq *%rsi

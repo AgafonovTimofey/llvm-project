@@ -53,10 +53,9 @@ define fastcc i32 @stack_call_int_szext() {
 ; CHECK-NEXT:    or %s0, -1, (0)1
 ; CHECK-NEXT:    st %s0, 248(, %s11)
 ; CHECK-NEXT:    lea %s34, 65535
-; CHECK-NEXT:    lea %s0, stack_callee_int_szext@lo
-; CHECK-NEXT:    and %s0, %s0, (32)0
-; CHECK-NEXT:    lea.sl %s12, stack_callee_int_szext@hi(, %s0)
-; CHECK-NEXT:    or %s0, -1, (0)1
+; CHECK-NEXT:    lea %s1, stack_callee_int_szext@lo
+; CHECK-NEXT:    and %s1, %s1, (32)0
+; CHECK-NEXT:    lea.sl %s12, stack_callee_int_szext@hi(, %s1)
 ; CHECK-NEXT:    lea %s1, 255
 ; CHECK-NEXT:    or %s2, 3, (0)1
 ; CHECK-NEXT:    or %s3, 4, (0)1

@@ -18,15 +18,15 @@ define void @test(ptr %a) #0 {
 ; CHECK-NEXT:    .cfi_offset w20, -32
 ; CHECK-NEXT:  Lloh0:
 ; CHECK-NEXT:    adrp x8, ___stack_chk_guard@GOTPAGE
-; CHECK-NEXT:    mov x1, x0
 ; CHECK-NEXT:    add x19, sp, #16
+; CHECK-NEXT:    mov x1, x0
 ; CHECK-NEXT:  Lloh1:
 ; CHECK-NEXT:    ldr x8, [x8, ___stack_chk_guard@GOTPAGEOFF]
 ; CHECK-NEXT:  Lloh2:
 ; CHECK-NEXT:    ldr x8, [x8]
 ; CHECK-NEXT:    str x8, [sp, #40]
 ; CHECK-NEXT:    str x0, [sp, #8]
-; CHECK-NEXT:    add x0, sp, #16
+; CHECK-NEXT:    mov x0, x19
 ; CHECK-NEXT:    bl _strcpy
 ; CHECK-NEXT:  Lloh3:
 ; CHECK-NEXT:    adrp x0, l_.str@PAGE

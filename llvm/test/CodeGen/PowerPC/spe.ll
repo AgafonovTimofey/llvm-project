@@ -1642,17 +1642,17 @@ define double @test_spill(double %a, i32 %a1, i64 %a2, ptr %a3, ptr %a4, ptr %a5
 ; SPE-NEXT:    stw 4, 20(1) # 4-byte Folded Spill
 ; SPE-NEXT:    #APP
 ; SPE-NEXT:    #NO_APP
-; SPE-NEXT:    addi 3, 1, 76
-; SPE-NEXT:    li 4, 0
-; SPE-NEXT:    li 5, 24
-; SPE-NEXT:    li 6, 1
 ; SPE-NEXT:    li 30, 0
+; SPE-NEXT:    addi 3, 1, 76
+; SPE-NEXT:    li 5, 24
+; SPE-NEXT:    mr 4, 30
+; SPE-NEXT:    li 6, 1
 ; SPE-NEXT:    bl test_memset
 ; SPE-NEXT:    lwz 3, 20(1) # 4-byte Folded Reload
 ; SPE-NEXT:    stw 30, 0(3)
 ; SPE-NEXT:    bl test_func2
 ; SPE-NEXT:    addi 3, 1, 32
-; SPE-NEXT:    li 4, 0
+; SPE-NEXT:    mr 4, 30
 ; SPE-NEXT:    li 5, 20
 ; SPE-NEXT:    li 6, 1
 ; SPE-NEXT:    bl test_memset
@@ -1693,7 +1693,7 @@ define double @test_spill(double %a, i32 %a1, i64 %a2, ptr %a3, ptr %a4, ptr %a5
 ; EFPU2-NEXT:    stw 28, 112(1) # 4-byte Folded Spill
 ; EFPU2-NEXT:    stw 29, 116(1) # 4-byte Folded Spill
 ; EFPU2-NEXT:    stw 30, 120(1) # 4-byte Folded Spill
-; EFPU2-NEXT:    lwz 28, 136(1)
+; EFPU2-NEXT:    lwz 27, 136(1)
 ; EFPU2-NEXT:    bl __adddf3
 ; EFPU2-NEXT:    lis 5, 16393
 ; EFPU2-NEXT:    lis 6, -4069
@@ -1702,18 +1702,18 @@ define double @test_spill(double %a, i32 %a1, i64 %a2, ptr %a3, ptr %a4, ptr %a5
 ; EFPU2-NEXT:    #APP
 ; EFPU2-NEXT:    #NO_APP
 ; EFPU2-NEXT:    bl __adddf3
+; EFPU2-NEXT:    li 28, 0
 ; EFPU2-NEXT:    mr 30, 3
 ; EFPU2-NEXT:    mr 29, 4
 ; EFPU2-NEXT:    addi 3, 1, 56
-; EFPU2-NEXT:    li 4, 0
 ; EFPU2-NEXT:    li 5, 24
+; EFPU2-NEXT:    mr 4, 28
 ; EFPU2-NEXT:    li 6, 1
-; EFPU2-NEXT:    li 27, 0
 ; EFPU2-NEXT:    bl test_memset
-; EFPU2-NEXT:    stw 27, 0(28)
+; EFPU2-NEXT:    stw 28, 0(27)
 ; EFPU2-NEXT:    bl test_func2
 ; EFPU2-NEXT:    addi 3, 1, 12
-; EFPU2-NEXT:    li 4, 0
+; EFPU2-NEXT:    mr 4, 28
 ; EFPU2-NEXT:    li 5, 20
 ; EFPU2-NEXT:    li 6, 1
 ; EFPU2-NEXT:    bl test_memset

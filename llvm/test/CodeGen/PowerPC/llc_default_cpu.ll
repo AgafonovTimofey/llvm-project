@@ -4,13 +4,13 @@
 ; RUN: llc < %s -mtriple=powerpc64-unknown-linux-gnu -frame-pointer=all -mcpu=ppc64 | FileCheck %s -check-prefixes=LNX-PPC64,LNX-COM
 
 ; Test that the default CPU for the AIX OS is pwr7.
-; RUN: llc < %s -mtriple=powerpc-ibm-aix-xcoff -mcpu=ppc | FileCheck %s -check-prefixes=AIX-PPC,AIX-COM
-; RUN: llc < %s -mtriple=powerpc-ibm-aix-xcoff -mcpu=pwr7 | FileCheck %s -check-prefixes=AIX-PWR7,AIX-COM
-; RUN: llc < %s -mtriple=powerpc-ibm-aix-xcoff | FileCheck %s -check-prefixes=AIX-PWR7,AIX-COM
+; RUN: llc < %s -mtriple=powerpc-ibm-aix-xcoff -mcpu=ppc | FileCheck %s -check-prefixes=AIX-COM
+; RUN: llc < %s -mtriple=powerpc-ibm-aix-xcoff -mcpu=pwr7 | FileCheck %s -check-prefixes=AIX-COM
+; RUN: llc < %s -mtriple=powerpc-ibm-aix-xcoff | FileCheck %s -check-prefixes=AIX-COM
 
 ; RUN: llc < %s -mtriple=powerpc64-ibm-aix-xcoff -mcpu=ppc | FileCheck %s -check-prefixes=AIX64-PPC,AIX64-COM-NEXT
-; RUN: llc < %s -mtriple=powerpc64-ibm-aix-xcoff -mcpu=pwr7 | FileCheck %s -check-prefixes=AIX64-PWR7,AIX64-COM-NEXT
-; RUN: llc < %s -mtriple=powerpc64-ibm-aix-xcoff | FileCheck %s -check-prefixes=AIX64-PWR7,AIX64-COM-NEXT
+; RUN: llc < %s -mtriple=powerpc64-ibm-aix-xcoff -mcpu=pwr7 | FileCheck %s -check-prefixes=AIX64-COM-NEXT
+; RUN: llc < %s -mtriple=powerpc64-ibm-aix-xcoff | FileCheck %s -check-prefixes=AIX64-COM-NEXT
 
 define i32 @main() {
 entry:
@@ -32,9 +32,8 @@ entry:
 ;   LNX-COM-NEXT:      .cfi_offset r31, -8
 ;   LNX-COM-NEXT:      mr      31, 1
 ;   LNX-COM-NEXT:      .cfi_def_cfa_register r31
-;   LNX-COM-NEXT:      li 4, 0
 ;   LNX-COM-NEXT:      li 3, 0
-;   LNX-COM-NEXT:      stw 4, 60(31)
+;   LNX-COM-NEXT:      stw 3, 60(31)
 ;   LNX-COM-NEXT:      ld 1, 0(1)
 ;   LNX-COM-NEXT:      ld 31, -8(1)
 ;   LNX-COM-NEXT:      blr
@@ -47,10 +46,8 @@ entry:
 ;  AIX-COM-NEXT:      lis 0, -1
 ;  AIX-COM-NEXT:      ori 0, 0, 32736
 ;  AIX-COM-NEXT:      stwux 1, 1, 0
-;  AIX-PPC-NEXT:      li 4, 0
 ;  AIX-COM-NEXT:      li 3, 0
-;  AIX-PPC-NEXT:      stw 4, 36(1)
-; AIX-PWR7-NEXT:      stw 3, 36(1)
+;  AIX-COM-NEXT:      stw 3, 36(1)
 ;  AIX-COM-NEXT:      lwz 1, 0(1)
 ;  AIX-COM-NEXT:      blr
 
@@ -59,9 +56,7 @@ entry:
 ;  AIX64-COM-NEXT:    lis 0, -1
 ;  AIX64-COM-NEXT:    ori 0, 0, 32720
 ;  AIX64-COM-NEXT:    stdux 1, 1, 0
-;  AIX64-PPC-NEXT:    li 4, 0
 ;  AIX64-COM-NEXT:    li 3, 0
-;  AIX64-PPC-NEXT:    stw 4, 52(1)
-; AIX64-PWR7-NEXT:    stw 3, 52(1)
+;  AIX64-PPC-NEXT:    stw 3, 52(1)
 ;  AIX64-COM-NEXT:    ld 1, 0(1)
 ;  AIX64-COM-NEXT:    blr

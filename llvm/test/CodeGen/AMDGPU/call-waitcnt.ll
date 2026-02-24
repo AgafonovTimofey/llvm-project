@@ -42,7 +42,6 @@ define amdgpu_kernel void @call_memory_no_dep(ptr addrspace(1) %ptr, i32) #0 {
 ; SDAG-NEXT:    s_waitcnt lgkmcnt(0)
 ; SDAG-NEXT:    global_store_dword v0, v0, s[6:7]
 ; SDAG-NEXT:    s_mov_b64 s[6:7], s[4:5]
-; SDAG-NEXT:    v_mov_b32_e32 v0, 0
 ; SDAG-NEXT:    s_mov_b32 s32, 0
 ; SDAG-NEXT:    s_swappc_b64 s[30:31], s[8:9]
 ; SDAG-NEXT:    s_endpgm
@@ -79,13 +78,13 @@ define amdgpu_kernel void @call_no_wait_after_call(ptr addrspace(1) %ptr, i32) #
 ; SDAG-NEXT:    s_load_dwordx2 s[34:35], s[6:7], 0x0
 ; SDAG-NEXT:    s_add_u32 s0, s0, s11
 ; SDAG-NEXT:    s_addc_u32 s1, s1, 0
+; SDAG-NEXT:    v_mov_b32_e32 v40, 0
 ; SDAG-NEXT:    s_getpc_b64 s[8:9]
 ; SDAG-NEXT:    s_add_u32 s8, s8, func@rel32@lo+4
 ; SDAG-NEXT:    s_addc_u32 s9, s9, func@rel32@hi+12
 ; SDAG-NEXT:    s_mov_b64 s[6:7], s[4:5]
-; SDAG-NEXT:    v_mov_b32_e32 v0, 0
+; SDAG-NEXT:    v_mov_b32_e32 v0, v40
 ; SDAG-NEXT:    s_mov_b32 s32, 0
-; SDAG-NEXT:    v_mov_b32_e32 v40, 0
 ; SDAG-NEXT:    s_swappc_b64 s[30:31], s[8:9]
 ; SDAG-NEXT:    global_store_dword v40, v40, s[34:35]
 ; SDAG-NEXT:    s_endpgm
@@ -120,13 +119,13 @@ define amdgpu_kernel void @call_no_wait_after_call_return_val(ptr addrspace(1) %
 ; SDAG-NEXT:    s_load_dwordx2 s[34:35], s[6:7], 0x0
 ; SDAG-NEXT:    s_add_u32 s0, s0, s11
 ; SDAG-NEXT:    s_addc_u32 s1, s1, 0
+; SDAG-NEXT:    v_mov_b32_e32 v40, 0
 ; SDAG-NEXT:    s_getpc_b64 s[8:9]
 ; SDAG-NEXT:    s_add_u32 s8, s8, func.return@rel32@lo+4
 ; SDAG-NEXT:    s_addc_u32 s9, s9, func.return@rel32@hi+12
 ; SDAG-NEXT:    s_mov_b64 s[6:7], s[4:5]
-; SDAG-NEXT:    v_mov_b32_e32 v0, 0
+; SDAG-NEXT:    v_mov_b32_e32 v0, v40
 ; SDAG-NEXT:    s_mov_b32 s32, 0
-; SDAG-NEXT:    v_mov_b32_e32 v40, 0
 ; SDAG-NEXT:    s_swappc_b64 s[30:31], s[8:9]
 ; SDAG-NEXT:    global_store_dword v40, v0, s[34:35]
 ; SDAG-NEXT:    s_endpgm

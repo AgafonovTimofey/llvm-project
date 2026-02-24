@@ -390,39 +390,38 @@ define fastcc i32 @no_sibling_call_callee_more_stack_space(i32 %a, i32 %b) #1 {
 ; GCN-NEXT:    s_load_dwordx2 s[4:5], s[4:5], 0x0
 ; GCN-NEXT:    v_mov_b32_e32 v2, 0
 ; GCN-NEXT:    v_writelane_b32 v40, s30, 0
+; GCN-NEXT:    v_mov_b32_e32 v3, v2
+; GCN-NEXT:    v_mov_b32_e32 v4, v2
+; GCN-NEXT:    v_mov_b32_e32 v5, v2
+; GCN-NEXT:    v_mov_b32_e32 v6, v2
+; GCN-NEXT:    v_mov_b32_e32 v7, v2
+; GCN-NEXT:    v_mov_b32_e32 v8, v2
+; GCN-NEXT:    v_mov_b32_e32 v9, v2
+; GCN-NEXT:    v_mov_b32_e32 v10, v2
+; GCN-NEXT:    v_mov_b32_e32 v11, v2
+; GCN-NEXT:    v_mov_b32_e32 v12, v2
+; GCN-NEXT:    v_mov_b32_e32 v13, v2
+; GCN-NEXT:    v_mov_b32_e32 v14, v2
+; GCN-NEXT:    v_mov_b32_e32 v15, v2
+; GCN-NEXT:    v_mov_b32_e32 v16, v2
+; GCN-NEXT:    v_mov_b32_e32 v17, v2
+; GCN-NEXT:    v_mov_b32_e32 v18, v2
+; GCN-NEXT:    v_mov_b32_e32 v19, v2
+; GCN-NEXT:    v_mov_b32_e32 v20, v2
+; GCN-NEXT:    v_mov_b32_e32 v21, v2
+; GCN-NEXT:    v_mov_b32_e32 v22, v2
+; GCN-NEXT:    v_mov_b32_e32 v23, v2
+; GCN-NEXT:    v_mov_b32_e32 v24, v2
+; GCN-NEXT:    v_mov_b32_e32 v25, v2
+; GCN-NEXT:    v_mov_b32_e32 v26, v2
+; GCN-NEXT:    v_mov_b32_e32 v27, v2
+; GCN-NEXT:    v_mov_b32_e32 v28, v2
+; GCN-NEXT:    v_mov_b32_e32 v29, v2
+; GCN-NEXT:    v_mov_b32_e32 v30, v2
+; GCN-NEXT:    v_writelane_b32 v40, s31, 1
 ; GCN-NEXT:    buffer_store_dword v2, off, s[0:3], s32
 ; GCN-NEXT:    buffer_store_dword v2, off, s[0:3], s32 offset:4
 ; GCN-NEXT:    buffer_store_dword v2, off, s[0:3], s32 offset:8
-; GCN-NEXT:    v_mov_b32_e32 v2, 0
-; GCN-NEXT:    v_mov_b32_e32 v3, 0
-; GCN-NEXT:    v_mov_b32_e32 v4, 0
-; GCN-NEXT:    v_mov_b32_e32 v5, 0
-; GCN-NEXT:    v_mov_b32_e32 v6, 0
-; GCN-NEXT:    v_mov_b32_e32 v7, 0
-; GCN-NEXT:    v_mov_b32_e32 v8, 0
-; GCN-NEXT:    v_mov_b32_e32 v9, 0
-; GCN-NEXT:    v_mov_b32_e32 v10, 0
-; GCN-NEXT:    v_mov_b32_e32 v11, 0
-; GCN-NEXT:    v_mov_b32_e32 v12, 0
-; GCN-NEXT:    v_mov_b32_e32 v13, 0
-; GCN-NEXT:    v_mov_b32_e32 v14, 0
-; GCN-NEXT:    v_mov_b32_e32 v15, 0
-; GCN-NEXT:    v_mov_b32_e32 v16, 0
-; GCN-NEXT:    v_mov_b32_e32 v17, 0
-; GCN-NEXT:    v_mov_b32_e32 v18, 0
-; GCN-NEXT:    v_mov_b32_e32 v19, 0
-; GCN-NEXT:    v_mov_b32_e32 v20, 0
-; GCN-NEXT:    v_mov_b32_e32 v21, 0
-; GCN-NEXT:    v_mov_b32_e32 v22, 0
-; GCN-NEXT:    v_mov_b32_e32 v23, 0
-; GCN-NEXT:    v_mov_b32_e32 v24, 0
-; GCN-NEXT:    v_mov_b32_e32 v25, 0
-; GCN-NEXT:    v_mov_b32_e32 v26, 0
-; GCN-NEXT:    v_mov_b32_e32 v27, 0
-; GCN-NEXT:    v_mov_b32_e32 v28, 0
-; GCN-NEXT:    v_mov_b32_e32 v29, 0
-; GCN-NEXT:    v_mov_b32_e32 v30, 0
-; GCN-NEXT:    v_writelane_b32 v40, s31, 1
 ; GCN-NEXT:    s_waitcnt lgkmcnt(0)
 ; GCN-NEXT:    s_swappc_b64 s[30:31], s[4:5]
 ; GCN-NEXT:    v_readlane_b32 s31, v40, 1
@@ -528,38 +527,37 @@ define fastcc i32 @sibling_call_stack_objecti32_fastcc_i32_i32_a32i32_larger_arg
 ; GCN-NEXT:    buffer_store_dword v2, off, s[0:3], s32 offset:48
 ; GCN-NEXT:    s_waitcnt vmcnt(0)
 ; GCN-NEXT:    v_mov_b32_e32 v2, 0
+; GCN-NEXT:    v_mov_b32_e32 v3, v2
+; GCN-NEXT:    v_mov_b32_e32 v4, v2
+; GCN-NEXT:    v_mov_b32_e32 v5, v2
+; GCN-NEXT:    v_mov_b32_e32 v6, v2
+; GCN-NEXT:    v_mov_b32_e32 v7, v2
+; GCN-NEXT:    v_mov_b32_e32 v8, v2
+; GCN-NEXT:    v_mov_b32_e32 v9, v2
+; GCN-NEXT:    v_mov_b32_e32 v10, v2
+; GCN-NEXT:    v_mov_b32_e32 v11, v2
+; GCN-NEXT:    v_mov_b32_e32 v12, v2
+; GCN-NEXT:    v_mov_b32_e32 v13, v2
+; GCN-NEXT:    v_mov_b32_e32 v14, v2
+; GCN-NEXT:    v_mov_b32_e32 v15, v2
+; GCN-NEXT:    v_mov_b32_e32 v16, v2
+; GCN-NEXT:    v_mov_b32_e32 v17, v2
+; GCN-NEXT:    v_mov_b32_e32 v18, v2
+; GCN-NEXT:    v_mov_b32_e32 v19, v2
+; GCN-NEXT:    v_mov_b32_e32 v20, v2
+; GCN-NEXT:    v_mov_b32_e32 v21, v2
+; GCN-NEXT:    v_mov_b32_e32 v22, v2
+; GCN-NEXT:    v_mov_b32_e32 v23, v2
+; GCN-NEXT:    v_mov_b32_e32 v24, v2
+; GCN-NEXT:    v_mov_b32_e32 v25, v2
+; GCN-NEXT:    v_mov_b32_e32 v26, v2
+; GCN-NEXT:    v_mov_b32_e32 v27, v2
+; GCN-NEXT:    v_mov_b32_e32 v28, v2
+; GCN-NEXT:    v_mov_b32_e32 v29, v2
+; GCN-NEXT:    v_mov_b32_e32 v30, v2
 ; GCN-NEXT:    buffer_store_dword v2, off, s[0:3], s32
 ; GCN-NEXT:    buffer_store_dword v2, off, s[0:3], s32 offset:4
 ; GCN-NEXT:    buffer_store_dword v2, off, s[0:3], s32 offset:8
-; GCN-NEXT:    v_mov_b32_e32 v2, 0
-; GCN-NEXT:    v_mov_b32_e32 v3, 0
-; GCN-NEXT:    v_mov_b32_e32 v4, 0
-; GCN-NEXT:    v_mov_b32_e32 v5, 0
-; GCN-NEXT:    v_mov_b32_e32 v6, 0
-; GCN-NEXT:    v_mov_b32_e32 v7, 0
-; GCN-NEXT:    v_mov_b32_e32 v8, 0
-; GCN-NEXT:    v_mov_b32_e32 v9, 0
-; GCN-NEXT:    v_mov_b32_e32 v10, 0
-; GCN-NEXT:    v_mov_b32_e32 v11, 0
-; GCN-NEXT:    v_mov_b32_e32 v12, 0
-; GCN-NEXT:    v_mov_b32_e32 v13, 0
-; GCN-NEXT:    v_mov_b32_e32 v14, 0
-; GCN-NEXT:    v_mov_b32_e32 v15, 0
-; GCN-NEXT:    v_mov_b32_e32 v16, 0
-; GCN-NEXT:    v_mov_b32_e32 v17, 0
-; GCN-NEXT:    v_mov_b32_e32 v18, 0
-; GCN-NEXT:    v_mov_b32_e32 v19, 0
-; GCN-NEXT:    v_mov_b32_e32 v20, 0
-; GCN-NEXT:    v_mov_b32_e32 v21, 0
-; GCN-NEXT:    v_mov_b32_e32 v22, 0
-; GCN-NEXT:    v_mov_b32_e32 v23, 0
-; GCN-NEXT:    v_mov_b32_e32 v24, 0
-; GCN-NEXT:    v_mov_b32_e32 v25, 0
-; GCN-NEXT:    v_mov_b32_e32 v26, 0
-; GCN-NEXT:    v_mov_b32_e32 v27, 0
-; GCN-NEXT:    v_mov_b32_e32 v28, 0
-; GCN-NEXT:    v_mov_b32_e32 v29, 0
-; GCN-NEXT:    v_mov_b32_e32 v30, 0
 ; GCN-NEXT:    s_waitcnt lgkmcnt(0)
 ; GCN-NEXT:    s_setpc_b64 s[4:5]
 entry:
@@ -927,37 +925,36 @@ define fastcc void @sibling_call_byval_and_stack_passed(i32 %stack.out.arg, [64 
 ; GCN-NEXT:    s_getpc_b64 s[16:17]
 ; GCN-NEXT:    s_add_u32 s16, s16, void_fastcc_byval_and_stack_passed@rel32@lo+4
 ; GCN-NEXT:    s_addc_u32 s17, s17, void_fastcc_byval_and_stack_passed@rel32@hi+12
-; GCN-NEXT:    v_mov_b32_e32 v0, 0
-; GCN-NEXT:    v_mov_b32_e32 v1, 0
-; GCN-NEXT:    v_mov_b32_e32 v2, 0
-; GCN-NEXT:    v_mov_b32_e32 v3, 0
-; GCN-NEXT:    v_mov_b32_e32 v4, 0
-; GCN-NEXT:    v_mov_b32_e32 v5, 0
-; GCN-NEXT:    v_mov_b32_e32 v6, 0
-; GCN-NEXT:    v_mov_b32_e32 v7, 0
-; GCN-NEXT:    v_mov_b32_e32 v8, 0
-; GCN-NEXT:    v_mov_b32_e32 v9, 0
-; GCN-NEXT:    v_mov_b32_e32 v10, 0
-; GCN-NEXT:    v_mov_b32_e32 v11, 0
-; GCN-NEXT:    v_mov_b32_e32 v12, 0
-; GCN-NEXT:    v_mov_b32_e32 v13, 0
-; GCN-NEXT:    v_mov_b32_e32 v14, 0
-; GCN-NEXT:    v_mov_b32_e32 v15, 0
-; GCN-NEXT:    v_mov_b32_e32 v16, 0
-; GCN-NEXT:    v_mov_b32_e32 v17, 0
-; GCN-NEXT:    v_mov_b32_e32 v18, 0
-; GCN-NEXT:    v_mov_b32_e32 v19, 0
-; GCN-NEXT:    v_mov_b32_e32 v20, 0
-; GCN-NEXT:    v_mov_b32_e32 v21, 0
-; GCN-NEXT:    v_mov_b32_e32 v22, 0
-; GCN-NEXT:    v_mov_b32_e32 v23, 0
-; GCN-NEXT:    v_mov_b32_e32 v24, 0
-; GCN-NEXT:    v_mov_b32_e32 v25, 0
-; GCN-NEXT:    v_mov_b32_e32 v26, 0
-; GCN-NEXT:    v_mov_b32_e32 v27, 0
-; GCN-NEXT:    v_mov_b32_e32 v28, 0
-; GCN-NEXT:    v_mov_b32_e32 v29, 0
-; GCN-NEXT:    v_mov_b32_e32 v30, 0
+; GCN-NEXT:    v_mov_b32_e32 v0, v1
+; GCN-NEXT:    v_mov_b32_e32 v2, v1
+; GCN-NEXT:    v_mov_b32_e32 v3, v1
+; GCN-NEXT:    v_mov_b32_e32 v4, v1
+; GCN-NEXT:    v_mov_b32_e32 v5, v1
+; GCN-NEXT:    v_mov_b32_e32 v6, v1
+; GCN-NEXT:    v_mov_b32_e32 v7, v1
+; GCN-NEXT:    v_mov_b32_e32 v8, v1
+; GCN-NEXT:    v_mov_b32_e32 v9, v1
+; GCN-NEXT:    v_mov_b32_e32 v10, v1
+; GCN-NEXT:    v_mov_b32_e32 v11, v1
+; GCN-NEXT:    v_mov_b32_e32 v12, v1
+; GCN-NEXT:    v_mov_b32_e32 v13, v1
+; GCN-NEXT:    v_mov_b32_e32 v14, v1
+; GCN-NEXT:    v_mov_b32_e32 v15, v1
+; GCN-NEXT:    v_mov_b32_e32 v16, v1
+; GCN-NEXT:    v_mov_b32_e32 v17, v1
+; GCN-NEXT:    v_mov_b32_e32 v18, v1
+; GCN-NEXT:    v_mov_b32_e32 v19, v1
+; GCN-NEXT:    v_mov_b32_e32 v20, v1
+; GCN-NEXT:    v_mov_b32_e32 v21, v1
+; GCN-NEXT:    v_mov_b32_e32 v22, v1
+; GCN-NEXT:    v_mov_b32_e32 v23, v1
+; GCN-NEXT:    v_mov_b32_e32 v24, v1
+; GCN-NEXT:    v_mov_b32_e32 v25, v1
+; GCN-NEXT:    v_mov_b32_e32 v26, v1
+; GCN-NEXT:    v_mov_b32_e32 v27, v1
+; GCN-NEXT:    v_mov_b32_e32 v28, v1
+; GCN-NEXT:    v_mov_b32_e32 v29, v1
+; GCN-NEXT:    v_mov_b32_e32 v30, v1
 ; GCN-NEXT:    s_setpc_b64 s[16:17]
 entry:
   %alloca = alloca [3 x i32], align 16, addrspace(5)

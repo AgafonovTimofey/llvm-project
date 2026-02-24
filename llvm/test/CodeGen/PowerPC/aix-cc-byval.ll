@@ -651,10 +651,9 @@ define i32 @call_test_byval_homogeneous_float_struct() {
 ; 64BIT-NEXT:    li 3, 0
 ; 64BIT-NEXT:    std 0, 144(1)
 ; 64BIT-NEXT:    stw 3, 120(1)
+; 64BIT-NEXT:    lwz 4, 120(1)
+; 64BIT-NEXT:    sldi 4, 4, 32
 ; 64BIT-NEXT:    std 3, 112(1)
-; 64BIT-NEXT:    lwz 3, 120(1)
-; 64BIT-NEXT:    sldi 4, 3, 32
-; 64BIT-NEXT:    li 3, 0
 ; 64BIT-NEXT:    bl .test_byval_homogeneous_float_struct[PR]
 ; 64BIT-NEXT:    nop
 ; 64BIT-NEXT:    addi 1, 1, 128

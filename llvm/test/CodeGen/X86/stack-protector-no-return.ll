@@ -10,26 +10,25 @@ define void @_Z7catchesv() #0 personality ptr null {
 ; CHECK-NEXT:    .cfi_def_cfa_offset 16
 ; CHECK-NEXT:    movq %fs:40, %rax
 ; CHECK-NEXT:    movq %rax, (%rsp)
-; CHECK-NEXT:  .Ltmp0:
-; CHECK-NEXT:    xorl %eax, %eax
-; CHECK-NEXT:    xorl %edi, %edi
-; CHECK-NEXT:    xorl %esi, %esi
+; CHECK-NEXT:  .Ltmp0: # EH_LABEL
 ; CHECK-NEXT:    xorl %edx, %edx
-; CHECK-NEXT:    callq *%rax
-; CHECK-NEXT:  .Ltmp1:
+; CHECK-NEXT:    xorl %edi, %edi
+; CHECK-NEXT:    movq %rdx, %rsi
+; CHECK-NEXT:    callq *%rdx
+; CHECK-NEXT:  .Ltmp1: # EH_LABEL
 ; CHECK-NEXT:  # %bb.1: # %invoke.cont
 ; CHECK-NEXT:    movq %fs:40, %rax
 ; CHECK-NEXT:    cmpq (%rsp), %rax
 ; CHECK-NEXT:    jne .LBB0_6
 ; CHECK-NEXT:  # %bb.2: # %SP_return
-; CHECK-NEXT:  .Ltmp2:
+; CHECK-NEXT:  .Ltmp2: # EH_LABEL
 ; CHECK-NEXT:    xorl %eax, %eax
 ; CHECK-NEXT:    xorl %edi, %edi
 ; CHECK-NEXT:    callq *%rax
-; CHECK-NEXT:  .Ltmp3:
+; CHECK-NEXT:  .Ltmp3: # EH_LABEL
 ; CHECK-NEXT:  # %bb.3: # %invoke.cont2
 ; CHECK-NEXT:  .LBB0_4: # %lpad1
-; CHECK-NEXT:  .Ltmp4:
+; CHECK-NEXT:  .Ltmp4: # EH_LABEL
 ; CHECK-NEXT:    movq %fs:40, %rax
 ; CHECK-NEXT:    cmpq (%rsp), %rax
 ; CHECK-NEXT:    jne .LBB0_6
@@ -47,22 +46,21 @@ define void @_Z7catchesv() #0 personality ptr null {
 ; DISNOTET-NEXT:    .cfi_def_cfa_offset 16
 ; DISNOTET-NEXT:    movq %fs:40, %rax
 ; DISNOTET-NEXT:    movq %rax, (%rsp)
-; DISNOTET-NEXT:  .Ltmp0:
-; DISNOTET-NEXT:    xorl %eax, %eax
-; DISNOTET-NEXT:    xorl %edi, %edi
-; DISNOTET-NEXT:    xorl %esi, %esi
+; DISNOTET-NEXT:  .Ltmp0: # EH_LABEL
 ; DISNOTET-NEXT:    xorl %edx, %edx
-; DISNOTET-NEXT:    callq *%rax
-; DISNOTET-NEXT:  .Ltmp1:
+; DISNOTET-NEXT:    xorl %edi, %edi
+; DISNOTET-NEXT:    movq %rdx, %rsi
+; DISNOTET-NEXT:    callq *%rdx
+; DISNOTET-NEXT:  .Ltmp1: # EH_LABEL
 ; DISNOTET-NEXT:  # %bb.1: # %invoke.cont
-; DISNOTET-NEXT:  .Ltmp2:
+; DISNOTET-NEXT:  .Ltmp2: # EH_LABEL
 ; DISNOTET-NEXT:    xorl %eax, %eax
 ; DISNOTET-NEXT:    xorl %edi, %edi
 ; DISNOTET-NEXT:    callq *%rax
-; DISNOTET-NEXT:  .Ltmp3:
+; DISNOTET-NEXT:  .Ltmp3: # EH_LABEL
 ; DISNOTET-NEXT:  # %bb.2: # %invoke.cont2
 ; DISNOTET-NEXT:  .LBB0_3: # %lpad1
-; DISNOTET-NEXT:  .Ltmp4:
+; DISNOTET-NEXT:  .Ltmp4: # EH_LABEL
 ; DISNOTET-NEXT:    movq %fs:40, %rax
 ; DISNOTET-NEXT:    cmpq (%rsp), %rax
 ; DISNOTET-NEXT:    jne .LBB0_5
