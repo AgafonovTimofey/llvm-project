@@ -342,20 +342,21 @@ Limitations
 
 Move Semantics and False Positives
 ----------------------------------
-When an object is moved from, its state becomes unspecified. If pointers or
-views were created that refer to the object *before* it was moved, those
-pointers may become invalid after the move. Because the analysis cannot always
-know if a move operation invalidates outstanding pointers or simply transfers
-ownership, it issues ``-Wlifetime-safety-*-moved`` warnings in these situations.
-These warnings indicate a *potential* dangling issue but may be false positives
-if ownership was safely transferred and the resource remains alive.
-``std::unique_ptr::release()`` is treated similarly to ``std::move()`` in this
-regard, as it also relinquishes ownership.
+The analysis does not currently track ownership transfers through move operations.
+Instead, it uses scope-based lifetime tracking: when an owner goes out of scope,
+the analysis assumes the resource is destroyed, even if ownership was transferred
+via ``std::move()`` or ``std::unique_ptr::release()``.
 
-To avoid these warnings and prevent potential bugs, follow the
-**"move-first-then-alias"** pattern: ensure that views or raw pointers are
-created *after* a potential move, sourcing them from the new owner rather than
-aliasing an object that is about to be moved.
+This means that if a pointer or view is created from an owner, and that owner is
+later moved-from and goes out of scope, the analysis will issue a
+``-Wlifetime-safety-*-moved`` warning. This warning indicates that the pointer
+may be dangling, even though the resource may still be alive under a new owner.
+These are often false positives when ownership has been safely transferred.
+
+To avoid these warnings and ensure correctness, follow the
+**"move-first-then-alias"** pattern: create views or raw pointers *after* the
+ownership transfer, sourcing them from the new owner rather than the original
+owner that will go out of scope.
 
 For example:
 
