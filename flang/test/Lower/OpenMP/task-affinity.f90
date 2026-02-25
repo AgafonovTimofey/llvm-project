@@ -188,3 +188,37 @@ end subroutine
 ! CHECK:     %[[ADDRI8:.*]] = fir.convert %[[BASE]] : (!fir.ref<!fir.array<3x3xi32>>) -> !fir.ref<i8>
 ! CHECK:     %[[ENTRY:.*]] = omp.affinity_entry %[[ADDRI8]], %[[LEN]] : (!fir.ref<i8>, i64) -> !omp.affinity_entry_ty<!fir.ref<i8>, i64>
 ! CHECK:     omp.task affinity(%[[ENTRY]] : !omp.affinity_entry_ty<!fir.ref<i8>, i64>){{.*}} {
+
+subroutine omp_task_affinity_char_scalar_and_section()
+  implicit none
+  integer, parameter :: n = 10
+  character(len=7) :: s
+  character(len=7) :: a(n)
+  integer :: i
+
+  !$omp parallel
+  !$omp task affinity(s)
+    s = "1234567"
+  !$omp end task
+
+  !$omp task affinity(a(2:5))
+    do i = 2, 5
+      a(i) = "abcdefg"
+    end do
+  !$omp end task
+  !$omp end parallel
+end subroutine
+
+! CHECK-LABEL: func.func @_QPomp_task_affinity_char_scalar_and_section()
+! CHECK: omp.parallel {
+! CHECK:   %[[C7_I64:.*]] = arith.constant 7 : i64
+! CHECK:   %[[S_ADDR:.*]] = fir.convert %{{.*}} : (!fir.ref<!fir.char<1,7>>) -> !fir.ref<i8>
+! CHECK:   %[[S_ENTRY:.*]] = omp.affinity_entry %[[S_ADDR]], %[[C7_I64]] : (!fir.ref<i8>, i64) -> !omp.affinity_entry_ty<!fir.ref<i8>, i64>
+! CHECK:   omp.task affinity(%[[S_ENTRY]] : !omp.affinity_entry_ty<!fir.ref<i8>, i64>)
+!
+! CHECK:   %[[SPAN_I64:.*]] = fir.convert %{{.*}} : (index) -> i64
+! CHECK:   %[[C7_I64_2:.*]] = arith.constant 7 : i64
+! CHECK:   %[[BYTES:.*]] = arith.muli %[[SPAN_I64]], %[[C7_I64_2]] : i64
+! CHECK:   %[[A_ADDR:.*]] = fir.convert %{{.*}} : (!fir.ref<!fir.array<4x!fir.char<1,7>>>) -> !fir.ref<i8>
+! CHECK:   %[[A_ENTRY:.*]] = omp.affinity_entry %[[A_ADDR]], %[[BYTES]] : (!fir.ref<i8>, i64) -> !omp.affinity_entry_ty<!fir.ref<i8>, i64>
+! CHECK:   omp.task affinity(%[[A_ENTRY]] : !omp.affinity_entry_ty<!fir.ref<i8>, i64>)

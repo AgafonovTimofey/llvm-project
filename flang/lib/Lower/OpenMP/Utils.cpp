@@ -1034,6 +1034,10 @@ mlir::Value genAffinityLen(fir::FirOpBuilder &builder, mlir::Location loc,
                            llvm::ArrayRef<mlir::Value> bounds) {
   int64_t elemBytes = getElementBytesOrZero(entity, dl);
 
+  if (entity.isScalar()) {
+    return builder.createIntegerConstant(loc, builder.getI64Type(), elemBytes);
+  }
+
   if (!bounds.empty()) {
     mlir::Value spanElems = computeBoundsSpan(builder, loc, bounds, entity);
     return mlir::arith::MulIOp::create(
@@ -1042,15 +1046,8 @@ mlir::Value genAffinityLen(fir::FirOpBuilder &builder, mlir::Location loc,
                                       elemBytes));
   }
 
-  // explicit ref => element size (a(3), a(i))
-  if (entity.isScalar()) {
-    elemBytes = getElementBytesOrZero(entity, dl);
-    return builder.createIntegerConstant(loc, builder.getI64Type(), elemBytes);
-  }
-
   // whole object => whole size if static, else 0
-  int64_t wholeBytes =
-      getTotalElement(entity, loc, builder) * getElementBytesOrZero(entity, dl);
+  int64_t wholeBytes = getTotalElement(entity, loc, builder) * elemBytes;
   return builder.createIntegerConstant(loc, builder.getI64Type(), wholeBytes);
 }
 
