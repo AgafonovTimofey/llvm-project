@@ -18,7 +18,18 @@ enum NodeType : unsigned {
   CALL,
   BR_CC,
 };
-
 }
+
+class TAgaTargetLowering : public TargetLowering {
+  const TAgaSubtarget &STI;
+
+public:
+  explicit TAgaTargetLowering(const TargetMachine &TM,
+                              const TAgaSubtarget &STI);
+
+  const char *getTargetNodeName(unsigned Opcode) const override;
+  TAgaSubtarget const &getSubtarget() const { return STI; }
+};
+
 } // namespace llvm
 #endif // LLVM_LIB_TARGET_TAGA_TAGAISELLOWERING_H

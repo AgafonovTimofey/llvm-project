@@ -1,6 +1,7 @@
 #ifndef LLVM_LIB_TARGET_TAGA_TAGASUBTARGET_H
 #define LLVM_LIB_TARGET_TAGA_TAGASUBTARGET_H
 
+#include "TAgaISelLowering.h"
 #include "llvm/CodeGen/TargetSubtargetInfo.h"
 
 #define GET_SUBTARGETINFO_HEADER
@@ -9,13 +10,19 @@
 namespace llvm {
 
 class TAgaSubtarget : public TAgaGenSubtargetInfo {
+  TAgaTargetLowering TLInfo;
+
 public:
-  TAgaSubtarget(const StringRef &CPU, const StringRef &TuneCPU,
-                const StringRef &FS, const TargetMachine &TM);
+  TAgaSubtarget(const Triple &TT, const std::string &CPU, const std::string &FS,
+                const TargetMachine &TM);
 
   void ParseSubtargetFeatures(StringRef CPU, StringRef TuneCPU, StringRef FS);
+
+  const TAgaTargetLowering *getTargetLowering() const override {
+    return &TLInfo;
+  }
 };
 
-} // end namespace llvm
+} // namespace llvm
 
 #endif // LLVM_LIB_TARGET_TAGA_TAGASUBTARGET_H
