@@ -1,7 +1,15 @@
 add_llvm_component_group(TAga)
 
+set(LLVM_TARGET_DEFINITIONS TAga.td)
+
+tablegen(LLVM TAgaGenRegisterInfo.inc -gen-register-info)
+
+add_public_tablegen_target(TAgaCommonTableGen)
+
+
 add_llvm_target(TAgaCodeGen
   TAgaTargetMachine.cpp
+  TAgaRegisterInfo.cpp
 
   LINK_COMPONENTS
   CodeGen
