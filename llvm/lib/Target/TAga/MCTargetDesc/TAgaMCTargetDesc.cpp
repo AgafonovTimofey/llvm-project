@@ -1,10 +1,13 @@
 #include "TAgaMCTargetDesc.h"
 #include "MCTargetDesc/TAgaInfo.h"
+#include "TAgaMCAsmInfo.h"
 #include "TargetInfo/TAgaTargetInfo.h"
+#include "llvm/MC/MCDwarf.h"
 #include "llvm/MC/MCInstrInfo.h"
 #include "llvm/MC/MCRegisterInfo.h"
 #include "llvm/MC/MCSubtargetInfo.h"
 #include "llvm/MC/TargetRegistry.h"
+#include "llvm/Support/ErrorHandling.h"
 
 using namespace llvm;
 
@@ -34,10 +37,21 @@ static MCSubtargetInfo *createTAgaMCSubtargetInfo(const Triple &TT,
   return createTAgaMCSubtargetInfoImpl(TT, CPU, CPU, FS);
 }
 
+static MCAsmInfo *createTAgaMCAsmInfo(const MCRegisterInfo &MRI,
+                                      const Triple &TT,
+                                      const MCTargetOptions &Options) {
+  MCAsmInfo *MAI = new TAgaELFMCAsmInfo(TT);
+  unsigned SP = MRI.getDwarfRegNum(TAga::R1, true);
+  MCCFIInstruction Inst = MCCFIInstruction::cfiDefCfa(nullptr, SP, 0);
+  MAI->addInitialFrameState(Inst);
+  return MAI;
+}
+
 extern "C" LLVM_EXTERNAL_VISIBILITY void LLVMInitializeTAgaTargetMC() {
   Target &TheTAgaTarget = getTheTAgaTarget();
   TargetRegistry::RegisterMCRegInfo(TheTAgaTarget, createTAgaMCRegisterInfo);
   TargetRegistry::RegisterMCInstrInfo(TheTAgaTarget, createTAgaMCInstrInfo);
   TargetRegistry::RegisterMCSubtargetInfo(TheTAgaTarget,
                                           createTAgaMCSubtargetInfo);
+  RegisterMCAsmInfoFn X(TheTAgaTarget, createTAgaMCAsmInfo);
 }
