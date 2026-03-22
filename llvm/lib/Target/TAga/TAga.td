@@ -1,4 +1,6 @@
 include "llvm/Target/Target.td"
 include "TAgaRegisterInfo.td"
+include "TAgaInstrInfo.td"
 
-def TAga : Target;
+def TAgaInstrInfo : InstrInfo;
+def TAga : Target { let InstructionSet = TAgaInstrInfo; }

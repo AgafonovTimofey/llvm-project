@@ -4,4 +4,7 @@
 #define GET_REGINFO_ENUM
 #include "TAgaGenRegisterInfo.inc"
 
+#define GET_INSTRINFO_ENUM
+#include "TAgaGenInstrInfo.inc"
+
 #endif // LLVM_LIB_TARGET_TAGA_MCTARGETDESC_TAGAMCTARGETDESC_H
