@@ -5,6 +5,7 @@ set(LLVM_TARGET_DEFINITIONS TAga.td)
 tablegen(LLVM TAgaGenRegisterInfo.inc -gen-register-info)
 tablegen(LLVM TAgaGenInstrInfo.inc -gen-instr-info)
 tablegen(LLVM TAgaGenSubtargetInfo.inc -gen-subtarget)
+tablegen(LLVM TAgaGenMCPseudoLowering.inc -gen-pseudo-lowering)
 
 add_public_tablegen_target(TAgaCommonTableGen)
 
@@ -14,6 +15,7 @@ add_llvm_target(TAgaCodeGen
   TAgaRegisterInfo.cpp
   TAgaInstrInfo.cpp
   TAgaSubtarget.cpp
+  TAgaAsmPrinter.cpp
 
   LINK_COMPONENTS
   CodeGen
@@ -21,6 +23,7 @@ add_llvm_target(TAgaCodeGen
   Support
   Target
   TAgaInfo
+  AsmPrinter
 
   ADD_TO_COMPONENT
   TAga
