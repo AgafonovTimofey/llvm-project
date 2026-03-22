@@ -1,5 +1,6 @@
 #include "TAgaTargetMachine.h"
 #include "TargetInfo/TAgaTargetInfo.h"
+#include "llvm/CodeGen/TargetPassConfig.h"
 #include "llvm/MC/TargetRegistry.h"
 #include <optional>
 
@@ -19,4 +20,20 @@ TAgaTargetMachine::TAgaTargetMachine(const Target &T, const Triple &TT,
           T, "e-m:e-p:32:32-i8:8:32-i16:16:32-i64:64-n32", TT, CPU, FS, Options,
           Reloc::Static, getEffectiveCodeModel(CM, CodeModel::Small), OL) {
   initAsmInfo();
+}
+
+namespace {
+
+class TAgaPassConfig : public TargetPassConfig {
+public:
+  TAgaPassConfig(TAgaTargetMachine &TM, PassManagerBase &PM)
+      : TargetPassConfig(TM, PM) {}
+
+  bool addInstSelector() override { return false; }
+};
+
+} // namespace
+
+TargetPassConfig *TAgaTargetMachine::createPassConfig(PassManagerBase &PM) {
+  return new TAgaPassConfig(*this, PM);
 }

@@ -14,8 +14,10 @@ public:
                     std::optional<Reloc::Model> RM,
                     std::optional<CodeModel::Model> CM, CodeGenOptLevel OL,
                     bool JIT);
+
+  TargetPassConfig *createPassConfig(PassManagerBase &PM) override;
 };
 
 } // namespace llvm
 
-#endif
+#endif // LLVM_LIB_TARGET_TAGA_TAGATARGETMACHINE_H
