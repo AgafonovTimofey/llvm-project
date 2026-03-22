@@ -30,6 +30,10 @@ public:
       : TargetPassConfig(TM, PM) {}
 
   bool addInstSelector() override { return false; }
+
+  TAgaTargetMachine &getTAgaTargetMachine() const {
+    return getTM<TAgaTargetMachine>();
+  }
 };
 
 } // namespace
