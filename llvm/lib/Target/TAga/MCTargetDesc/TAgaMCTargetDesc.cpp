@@ -1,5 +1,6 @@
 #include "TAgaMCTargetDesc.h"
 #include "MCTargetDesc/TAgaInfo.h"
+#include "TAgaInstPrinter.h"
 #include "TAgaMCAsmInfo.h"
 #include "TargetInfo/TAgaTargetInfo.h"
 #include "llvm/MC/MCDwarf.h"
@@ -47,6 +48,14 @@ static MCAsmInfo *createTAgaMCAsmInfo(const MCRegisterInfo &MRI,
   return MAI;
 }
 
+static MCInstPrinter *createTAgaMCInstPrinter(const Triple &T,
+                                              unsigned SyntaxVariant,
+                                              const MCAsmInfo &MAI,
+                                              const MCInstrInfo &MII,
+                                              const MCRegisterInfo &MRI) {
+  return new TAgaInstPrinter(MAI, MII, MRI);
+}
+
 extern "C" LLVM_EXTERNAL_VISIBILITY void LLVMInitializeTAgaTargetMC() {
   Target &TheTAgaTarget = getTheTAgaTarget();
   TargetRegistry::RegisterMCRegInfo(TheTAgaTarget, createTAgaMCRegisterInfo);
@@ -54,4 +63,5 @@ extern "C" LLVM_EXTERNAL_VISIBILITY void LLVMInitializeTAgaTargetMC() {
   TargetRegistry::RegisterMCSubtargetInfo(TheTAgaTarget,
                                           createTAgaMCSubtargetInfo);
   RegisterMCAsmInfoFn X(TheTAgaTarget, createTAgaMCAsmInfo);
+  TargetRegistry::RegisterMCInstPrinter(TheTAgaTarget, createTAgaMCInstPrinter);
 }
