@@ -8,6 +8,8 @@ namespace llvm {
 extern Target TheTAgaTarget;
 
 class TAgaTargetMachine : public CodeGenTargetMachineImpl {
+  std::unique_ptr<TargetLoweringObjectFile> TLOF;
+
 public:
   TAgaTargetMachine(const Target &T, const Triple &TT, StringRef CPU,
                     StringRef FS, const TargetOptions &Options,
@@ -16,6 +18,7 @@ public:
                     bool JIT);
 
   TargetPassConfig *createPassConfig(PassManagerBase &PM) override;
+  TargetLoweringObjectFile *getObjFileLowering() const override;
 };
 
 } // namespace llvm
