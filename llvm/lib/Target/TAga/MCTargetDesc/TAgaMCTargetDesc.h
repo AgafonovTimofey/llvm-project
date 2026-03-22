@@ -7,4 +7,7 @@
 #define GET_INSTRINFO_ENUM
 #include "TAgaGenInstrInfo.inc"
 
+#define GET_SUBTARGETINFO_ENUM
+#include "TAgaGenSubtargetInfo.inc"
+
 #endif // LLVM_LIB_TARGET_TAGA_MCTARGETDESC_TAGAMCTARGETDESC_H

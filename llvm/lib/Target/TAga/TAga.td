@@ -4,3 +4,8 @@ include "TAgaInstrInfo.td"
 
 def TAgaInstrInfo : InstrInfo;
 def TAga : Target { let InstructionSet = TAgaInstrInfo; }
+
+class Proc<string Name, list<SubtargetFeature> Features>
+ : Processor<Name, NoItineraries, Features>;
+
+def : Proc<"generic", []>;
