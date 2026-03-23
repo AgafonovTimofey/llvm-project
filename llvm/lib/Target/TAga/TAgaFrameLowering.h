@@ -5,10 +5,15 @@
 
 namespace llvm {
 
+class TAgaSubtarget;
+
 class TAgaFrameLowering : public TargetFrameLowering {
+  const TAgaSubtarget &STI;
+
 public:
-  explicit TAgaFrameLowering()
-      : TargetFrameLowering(TargetFrameLowering::StackGrowsDown, Align(4), 0) {}
+  explicit TAgaFrameLowering(const TAgaSubtarget &STI)
+      : TargetFrameLowering(TargetFrameLowering::StackGrowsDown, Align(4), 0),
+        STI(STI) {}
 
   void emitPrologue(MachineFunction &MF,
                     MachineBasicBlock &MBB) const override {}

@@ -11,4 +11,5 @@ using namespace llvm;
 
 TAgaSubtarget::TAgaSubtarget(const Triple &TT, const std::string &CPU,
                              const std::string &FS, const TargetMachine &TM)
-    : TAgaGenSubtargetInfo(TT, CPU, CPU, FS), TLInfo(TM, *this) {}
+    : TAgaGenSubtargetInfo(TT, CPU, CPU, FS), TLInfo(TM, *this),
+      FrameLowering(*this) {}
