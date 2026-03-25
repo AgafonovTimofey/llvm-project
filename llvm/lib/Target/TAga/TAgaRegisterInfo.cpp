@@ -59,6 +59,6 @@ Register TAgaRegisterInfo::getFrameRegister(const MachineFunction &MF) const {
 
 const uint32_t *
 TAgaRegisterInfo::getCallPreservedMask(const MachineFunction &MF,
-                                      CallingConv::ID CC) const {
+                                       CallingConv::ID CC) const {
   return CSR_TAga_RegMask;
 }

@@ -38,6 +38,23 @@ TAgaTargetLowering::TAgaTargetLowering(const TargetMachine &TM,
                                        const TAgaSubtarget &STI)
     : TargetLowering(TM), STI(STI) {
   addRegisterClass(MVT::i32, &TAga::GPRRegClass);
+  computeRegisterProperties(STI.getRegisterInfo());
+
+  setStackPointerRegisterToSaveRestore(TAga::R1);
+
+  setSchedulingPreference(Sched::Source);
+
+  for (unsigned Opc = 0; Opc < ISD::BUILTIN_OP_END; ++Opc)
+    setOperationAction(Opc, MVT::i32, Expand);
+
+  setOperationAction(ISD::ADD, MVT::i32, Legal);
+  setOperationAction(ISD::MUL, MVT::i32, Legal);
+  setOperationAction(ISD::LOAD, MVT::i32, Legal);
+  setOperationAction(ISD::STORE, MVT::i32, Legal);
+  setOperationAction(ISD::Constant, MVT::i32, Legal);
+  setOperationAction(ISD::UNDEF, MVT::i32, Legal);
+  setOperationAction(ISD::BR_CC, MVT::i32, Custom);
+  setOperationAction(ISD::FRAMEADDR, MVT::i32, Legal);
 }
 
 const char *TAgaTargetLowering::getTargetNodeName(unsigned OpCode) const {
