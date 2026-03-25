@@ -3,6 +3,7 @@
 
 #include "TAgaFrameLowering.h"
 #include "TAgaISelLowering.h"
+#include "TAgaRegisterInfo.h"
 #include "llvm/CodeGen/TargetSubtargetInfo.h"
 
 #define GET_SUBTARGETINFO_HEADER
@@ -13,6 +14,7 @@ namespace llvm {
 class TAgaSubtarget : public TAgaGenSubtargetInfo {
   TAgaTargetLowering TLInfo;
   TAgaFrameLowering FrameLowering;
+  TAgaRegisterInfo RegInfo;
 
 public:
   TAgaSubtarget(const Triple &TT, const std::string &CPU, const std::string &FS,
@@ -27,6 +29,8 @@ public:
   const TAgaFrameLowering *getFrameLowering() const override {
     return &FrameLowering;
   }
+
+  const TAgaRegisterInfo *getRegisterInfo() const override { return &RegInfo; }
 };
 
 } // namespace llvm
