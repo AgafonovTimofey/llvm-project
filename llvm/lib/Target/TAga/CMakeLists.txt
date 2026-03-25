@@ -21,6 +21,7 @@ add_llvm_target(TAgaCodeGen
   TAgaAsmPrinter.cpp
   TAgaISelDagToDag.cpp
   TAgaISelLowering.cpp
+  TAgaMCInstLower.cpp
 
   LINK_COMPONENTS
   CodeGen

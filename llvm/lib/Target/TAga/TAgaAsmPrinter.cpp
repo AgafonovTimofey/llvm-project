@@ -36,6 +36,10 @@ public:
   StringRef getPassName() const override { return "TAgaAssemblyPrinter"; }
 
   bool lowerPseudoInstExpansion(const MachineInstr *MI, MCInst &Inst);
+
+  bool lowerOperand(const MachineOperand &MO, MCOperand &MCOp) const {
+    return LowerTAgaMachineOperandToMCOperand(MO, MCOp, *this);
+  }
 };
 
 } // namespace
@@ -48,6 +52,9 @@ void TAgaAsmPrinter::emitInstruction(const MachineInstr *MI) {
     EmitToStreamer(*OutStreamer, OutInst);
     return;
   }
+  MCInst TmpInst;
+  if (!lowerTAgaMachineInstrToMCInst(MI, TmpInst, *this))
+    EmitToStreamer(*OutStreamer, TmpInst);
 }
 
 extern "C" LLVM_EXTERNAL_VISIBILITY void LLVMInitializeTAgaAsmPrinter() {

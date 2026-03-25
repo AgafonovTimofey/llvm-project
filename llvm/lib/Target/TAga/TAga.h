@@ -8,6 +8,19 @@
 namespace llvm {
 class TAgaTargetMachine;
 class FunctionPass;
+class TAgaSubtarget;
+class AsmPrinter;
+class InstructionSelector;
+class MCInst;
+class MCOperand;
+class MachineInstr;
+class MachineOperand;
+class PassRegistry;
+
+bool lowerTAgaMachineInstrToMCInst(const MachineInstr *MI, MCInst &OutMI,
+                                   AsmPrinter &AP);
+bool LowerTAgaMachineOperandToMCOperand(const MachineOperand &MO,
+                                        MCOperand &MCOp, const AsmPrinter &AP);
 
 FunctionPass *createTAgaISelDag(TAgaTargetMachine &TM,
                                 CodeGenOptLevel OptLevel);
