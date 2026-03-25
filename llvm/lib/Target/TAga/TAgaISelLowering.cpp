@@ -26,7 +26,7 @@
 
 using namespace llvm;
 
-static const MCPhysReg ArgGPRs[] = {TAga::R9, TAga::R10, TAga::R11, TAga::R12};
+static const MCPhysReg ArgGPRs[] = {TAga::R0, TAga::R1, TAga::R2, TAga::R3};
 
 void TAgaTargetLowering::ReplaceNodeResults(SDNode *N,
                                             SmallVectorImpl<SDValue> &Results,
@@ -40,7 +40,7 @@ TAgaTargetLowering::TAgaTargetLowering(const TargetMachine &TM,
   addRegisterClass(MVT::i32, &TAga::GPRRegClass);
   computeRegisterProperties(STI.getRegisterInfo());
 
-  setStackPointerRegisterToSaveRestore(TAga::R1);
+  setStackPointerRegisterToSaveRestore(TAga::R9);
 
   setSchedulingPreference(Sched::Source);
 
@@ -170,7 +170,7 @@ SDValue TAgaTargetLowering::LowerCall(TargetLowering::CallLoweringInfo &CLI,
     } else {
       assert(VA.isMemLoc() && "Argument not register or memory");
       if (!StackPtr.getNode())
-        StackPtr = DAG.getCopyFromReg(Chain, DL, TAga::R1, PtrVT);
+        StackPtr = DAG.getCopyFromReg(Chain, DL, TAga::R9, PtrVT);
       SDValue Address =
           DAG.getNode(ISD::ADD, DL, PtrVT, StackPtr,
                       DAG.getIntPtrConstant(VA.getLocMemOffset(), DL));

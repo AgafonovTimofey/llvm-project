@@ -8,7 +8,7 @@ using namespace llvm;
 #define GET_REGINFO_TARGET_DESC
 #include "TAgaGenRegisterInfo.inc"
 
-TAgaRegisterInfo::TAgaRegisterInfo() : TAgaGenRegisterInfo(TAga::R0) {}
+TAgaRegisterInfo::TAgaRegisterInfo() : TAgaGenRegisterInfo(TAga::R7) {}
 
 const MCPhysReg *
 TAgaRegisterInfo::getCalleeSavedRegs(const MachineFunction *MF) const {
@@ -18,10 +18,10 @@ TAgaRegisterInfo::getCalleeSavedRegs(const MachineFunction *MF) const {
 BitVector TAgaRegisterInfo::getReservedRegs(const MachineFunction &MF) const {
   TAgaFrameLowering const *TFI = getFrameLowering(MF);
   BitVector Reserved(getNumRegs());
-  Reserved.set(TAga::R1);
+  Reserved.set(TAga::R9);
 
   if (TFI->hasFP(MF))
-    Reserved.set(TAga::R2);
+    Reserved.set(TAga::R8);
   return Reserved;
 }
 
@@ -54,7 +54,7 @@ bool TAgaRegisterInfo::eliminateFrameIndex(MachineBasicBlock::iterator II,
 
 Register TAgaRegisterInfo::getFrameRegister(const MachineFunction &MF) const {
   const TargetFrameLowering *TFI = getFrameLowering(MF);
-  return TFI->hasFP(MF) ? TAga::R2 : TAga::R1;
+  return TFI->hasFP(MF) ? TAga::R8 : TAga::R9;
 }
 
 const uint32_t *

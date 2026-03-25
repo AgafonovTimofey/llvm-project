@@ -23,7 +23,7 @@ using namespace llvm;
 
 static MCRegisterInfo *createTAgaMCRegisterInfo(const Triple &TT) {
   MCRegisterInfo *X = new MCRegisterInfo();
-  InitTAgaMCRegisterInfo(X, TAga::R0);
+  InitTAgaMCRegisterInfo(X, TAga::R7);
   return X;
 }
 
@@ -42,7 +42,7 @@ static MCAsmInfo *createTAgaMCAsmInfo(const MCRegisterInfo &MRI,
                                       const Triple &TT,
                                       const MCTargetOptions &Options) {
   MCAsmInfo *MAI = new TAgaELFMCAsmInfo(TT);
-  unsigned SP = MRI.getDwarfRegNum(TAga::R1, true);
+  unsigned SP = MRI.getDwarfRegNum(TAga::R9, true);
   MCCFIInstruction Inst = MCCFIInstruction::cfiDefCfa(nullptr, SP, 0);
   MAI->addInitialFrameState(Inst);
   return MAI;

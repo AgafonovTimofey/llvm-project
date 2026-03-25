@@ -32,7 +32,10 @@ public:
   TAgaPassConfig(TAgaTargetMachine &TM, PassManagerBase &PM)
       : TargetPassConfig(TM, PM) {}
 
-  bool addInstSelector() override { return false; }
+  bool addInstSelector() override {
+    addPass(createTAgaISelDag(getTAgaTargetMachine(), getOptLevel()));
+    return false;
+  }
 
   TAgaTargetMachine &getTAgaTargetMachine() const {
     return getTM<TAgaTargetMachine>();
