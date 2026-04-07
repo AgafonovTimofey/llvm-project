@@ -9,6 +9,7 @@ tablegen(LLVM TAgaGenMCPseudoLowering.inc -gen-pseudo-lowering)
 tablegen(LLVM TAgaGenDAGISel.inc -gen-dag-isel)
 tablegen(LLVM TAgaGenCallingConv.inc -gen-callingconv)
 tablegen(LLVM TAgaGenAsmWriter.inc -gen-asm-writer)
+tablegen(LLVM TAgaGenMCCodeEmitter.inc -gen-emitter)
 
 add_public_tablegen_target(TAgaCommonTableGen)
 

@@ -10,4 +10,12 @@
 #define GET_SUBTARGETINFO_ENUM
 #include "TAgaGenSubtargetInfo.inc"
 
+namespace llvm {
+class MCCodeEmitter;
+class MCContext;
+class MCInstrInfo;
+
+MCCodeEmitter *createTAgaMCCodeEmitter(const MCInstrInfo &MCII, MCContext &Ctx);
+} // namespace llvm
+
 #endif // LLVM_LIB_TARGET_TAGA_MCTARGETDESC_TAGAMCTARGETDESC_H
