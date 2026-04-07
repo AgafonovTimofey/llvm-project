@@ -3,6 +3,7 @@ add_llvm_component_library(LLVMTAgaDesc
   TAgaMCAsmInfo.cpp
   TAgaInstPrinter.cpp
   TAgaMCCodeEmitter.cpp
+  TAgaAsmBackend.cpp
 
   LINK_COMPONENTS
   MC

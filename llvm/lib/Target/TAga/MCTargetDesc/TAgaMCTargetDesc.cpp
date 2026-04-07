@@ -65,4 +65,5 @@ extern "C" LLVM_EXTERNAL_VISIBILITY void LLVMInitializeTAgaTargetMC() {
   RegisterMCAsmInfoFn X(TheTAgaTarget, createTAgaMCAsmInfo);
   TargetRegistry::RegisterMCInstPrinter(TheTAgaTarget, createTAgaMCInstPrinter);
   TargetRegistry::RegisterMCCodeEmitter(TheTAgaTarget, createTAgaMCCodeEmitter);
+  TargetRegistry::RegisterMCAsmBackend(TheTAgaTarget, createTAgaAsmBackend);
 }

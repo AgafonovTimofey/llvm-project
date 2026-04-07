@@ -14,8 +14,17 @@ namespace llvm {
 class MCCodeEmitter;
 class MCContext;
 class MCInstrInfo;
+class MCAsmBackend;
+class MCObjectTargetWriter;
+class MCRegisterInfo;
+class MCSubtargetInfo;
+class MCTargetOptions;
+class Target;
 
 MCCodeEmitter *createTAgaMCCodeEmitter(const MCInstrInfo &MCII, MCContext &Ctx);
+MCAsmBackend *createTAgaAsmBackend(const Target &T, const MCSubtargetInfo &STI,
+                                   const MCRegisterInfo &MRI,
+                                   const MCTargetOptions &Options);
 } // namespace llvm
 
 #endif // LLVM_LIB_TARGET_TAGA_MCTARGETDESC_TAGAMCTARGETDESC_H
