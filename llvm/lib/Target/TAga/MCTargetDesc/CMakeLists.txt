@@ -4,6 +4,7 @@ add_llvm_component_library(LLVMTAgaDesc
   TAgaInstPrinter.cpp
   TAgaMCCodeEmitter.cpp
   TAgaAsmBackend.cpp
+  TAgaELFObjectWriter.cpp
 
   LINK_COMPONENTS
   MC
