@@ -35,6 +35,7 @@
 #include "Targets/SPIR.h"
 #include "Targets/Sparc.h"
 #include "Targets/SystemZ.h"
+#include "Targets/TAga.h"
 #include "Targets/TCE.h"
 #include "Targets/VE.h"
 #include "Targets/WebAssembly.h"
@@ -470,6 +471,9 @@ std::unique_ptr<TargetInfo> AllocateTarget(const llvm::Triple &Triple,
       return std::make_unique<RISCV64TargetInfo>(Triple, Opts);
     }
 
+  case llvm::Triple::taga:
+    return std::make_unique<TAgaTargetInfo>(Triple, Opts);
+  
   case llvm::Triple::sparc:
     switch (os) {
     case llvm::Triple::Linux:
