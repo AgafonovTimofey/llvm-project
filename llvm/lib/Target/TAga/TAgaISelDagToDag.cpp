@@ -66,6 +66,5 @@ void TAgaDAGToDAGISel::Select(SDNode *Node) {
     Node->setNodeId(-1);
     return;
   }
-  SDLoc DL(Node);
   SelectCode(Node);
 }

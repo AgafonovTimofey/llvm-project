@@ -46,14 +46,21 @@ TAgaTargetLowering::TAgaTargetLowering(const TargetMachine &TM,
 
   for (unsigned Opc = 0; Opc < ISD::BUILTIN_OP_END; ++Opc)
     setOperationAction(Opc, MVT::i32, Expand);
-
+  setOperationAction(ISD::BRCOND, MVT::i32, Legal);
+  setOperationAction(ISD::BR_CC, MVT::i32, Custom);
   setOperationAction(ISD::ADD, MVT::i32, Legal);
+  setOperationAction(ISD::SUB, MVT::i32, Legal);
   setOperationAction(ISD::MUL, MVT::i32, Legal);
   setOperationAction(ISD::LOAD, MVT::i32, Legal);
   setOperationAction(ISD::STORE, MVT::i32, Legal);
+  setOperationAction(ISD::SETCC, MVT::i32, Legal);
+  setOperationAction(ISD::SELECT, MVT::i32, Custom);
+  setOperationAction(ISD::BRCOND, MVT::i32, Legal);
   setOperationAction(ISD::Constant, MVT::i32, Legal);
   setOperationAction(ISD::UNDEF, MVT::i32, Legal);
-  setOperationAction(ISD::BR_CC, MVT::i32, Custom);
+  setOperationAction(ISD::SRL, MVT::i32, Legal);
+  setOperationAction(ISD::SRA, MVT::i32, Legal);
+  setOperationAction(ISD::AND, MVT::i32, Legal);
   setOperationAction(ISD::FRAMEADDR, MVT::i32, Legal);
 }
 
@@ -488,4 +495,37 @@ bool TAgaTargetLowering::isLegalAddressingMode(const DataLayout &DL,
     return false;
   }
   return true;
+}
+
+SDValue TAgaTargetLowering::lowerBR_CC(SDValue Op, SelectionDAG &DAG) const {
+  SDLoc DL(Op);
+  SDValue Chain = Op.getOperand(0);
+  ISD::CondCode CC = cast<CondCodeSDNode>(Op.getOperand(1))->get();
+  SDValue LHS = Op.getOperand(2);
+  SDValue RHS = Op.getOperand(3);
+  SDValue Dest = Op.getOperand(4);
+  SDValue Cond = DAG.getSetCC(DL, MVT::i32, LHS, RHS, CC);
+  return DAG.getNode(TAgaISD::BR_CC, DL, MVT::Other, Chain, Cond, Dest);
+}
+
+SDValue TAgaTargetLowering::lowerSELECT(SDValue Op, SelectionDAG &DAG) const {
+  SDLoc DL(Op);
+  SDValue Cond = Op.getOperand(0);
+  SDValue TrueVal = Op.getOperand(1);
+  SDValue FalseVal = Op.getOperand(2);
+  SDValue Diff = DAG.getNode(ISD::SUB, DL, MVT::i32, TrueVal, FalseVal);
+  SDValue Mul = DAG.getNode(ISD::MUL, DL, MVT::i32, Cond, Diff);
+  return DAG.getNode(ISD::ADD, DL, MVT::i32, FalseVal, Mul);
+}
+
+SDValue TAgaTargetLowering::LowerOperation(SDValue Op,
+                                           SelectionDAG &DAG) const {
+  switch (Op->getOpcode()) {
+  case ISD::BR_CC:
+    return lowerBR_CC(Op, DAG);
+  case ISD::SELECT:
+    return lowerSELECT(Op, DAG);
+  default:
+    llvm_unreachable("Unexpected node to lower");
+  }
 }
