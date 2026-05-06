@@ -4,6 +4,8 @@ let TargetPrefix = "taga" in {  // All intrinsics start with "llvm.taga.".
    Intrinsic<[], [llvm_i32_ty, llvm_i32_ty, llvm_i32_ty], [IntrNoMem, IntrHasSideEffects]>;
  
  def int_taga_flush: ClangBuiltin<"simFlush">,
-   Intrinsic<[], [], [IntrNoMem, IntrHasSideEffects]>;
+   Intrinsic<[llvm_i32_ty], [], [IntrNoMem, IntrHasSideEffects]>;
  
+ def int_taga_simrand: ClangBuiltin<"simRand">,
+   Intrinsic<[llvm_i32_ty], [], [IntrNoMem]>;
  } // TargetPrefix = "taga"
